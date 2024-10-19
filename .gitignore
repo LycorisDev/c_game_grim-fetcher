@@ -1,0 +1,6 @@
+~*
+*.swp
+.vscode
+*.o
+*.a
+grim_fetcher
