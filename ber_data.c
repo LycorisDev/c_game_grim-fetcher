@@ -1,11 +1,5 @@
 #include "grim_fetcher.h"
 
-#ifdef BONUS
-# define SYMBOLS "01BCEGP"
-#else
-# define SYMBOLS "01CEP"
-#endif
-
 int			get_ber_fd(int argc, char *path);
 char		**copy_ber(int *fd, char *path);
 
@@ -45,10 +39,10 @@ static int	are_symbols_valid(char **ber)
 		j = 0;
 		while (ber[i][j])
 		{
-			if (!ft_strchr(SYMBOLS, ber[i][j], 0))
+			if (!ft_strchr("01BCEGP", ber[i][j], 0))
 			{
 				ft_dprintf(2, "Error: Unknown symbol '%c' (-> \"%s\")\n",
-					ber[i][j], SYMBOLS);
+					ber[i][j], "01BCEGP");
 				return (0);
 			}
 			++j;

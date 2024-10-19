@@ -1,6 +1,5 @@
 #include "grim_fetcher.h"
 #include <sys/time.h>
-#ifdef BONUS
 
 static long	get_time(void);
 
@@ -25,10 +24,3 @@ static long	get_time(void)
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
-#else
-
-long	get_delta_time(void)
-{
-	return (0);
-}
-#endif

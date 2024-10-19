@@ -5,8 +5,6 @@
 static void	orient_player(t_win *win, t_cell *player, t_ivec2 move);
 static void	collect_soul(t_win *win, t_ivec2 target);
 
-#ifdef BONUS
-
 void	move_player(t_win *win, t_ivec2 move)
 {
 	t_ivec2	target;
@@ -32,36 +30,6 @@ void	move_player(t_win *win, t_ivec2 move)
 	}
 	return ;
 }
-#else
-
-void	move_player(t_win *win, t_ivec2 move)
-{
-	t_ivec2	target;
-	char	symbol;
-
-	if (win->game_over)
-		return ;
-	orient_player(win, find_cell_by_symbol(win->map.cells, 'P'), move);
-	set_ivec2(&target, win->p.pos.x + move.x, win->p.pos.y + move.y);
-	symbol = win->map.cells[target.y * win->map.size.x + target.x].symbol;
-	if (symbol == 'e')
-	{
-		++win->p.steps;
-		ft_dprintf(1, "Steps: %d\n", win->p.steps);
-		win->game_over = 1;
-	}
-	else if (symbol == '0' || symbol == 'C')
-	{
-		if (symbol == 'C')
-			collect_soul(win, target);
-		move_symbol(&win->map, win->p.pos, target);
-		set_ivec2(&win->p.pos, target.x, target.y);
-		++win->p.steps;
-		ft_dprintf(1, "Steps: %d\n", win->p.steps);
-	}
-	return ;
-}
-#endif
 
 static void	orient_player(t_win *win, t_cell *player, t_ivec2 move)
 {
