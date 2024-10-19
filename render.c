@@ -20,8 +20,8 @@ int	render_loop(t_win *win)
 	move_along_clicked_path(win, dt);
 	frame = &win->frame[win->curr_frame];
 	tmp = &win->frame[2];
-	ft_bzero(tmp->addr, tmp->size.x * tmp->size.y * (tmp->bpp / 8));
-	ft_bzero(frame->addr, frame->size.x * frame->size.y * (frame->bpp / 8));
+	bzero(tmp->addr, tmp->size.x * tmp->size.y * (tmp->bpp / 8));
+	bzero(frame->addr, frame->size.x * frame->size.y * (frame->bpp / 8));
 	render_background(win, frame);
 	render_map(win, tmp, dt);
 	copy_frame(frame, tmp, win->zoom);

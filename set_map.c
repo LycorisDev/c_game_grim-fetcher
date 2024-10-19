@@ -28,7 +28,7 @@ int	set_map_and_player(t_win *win, int argc, char *path)
 	set_neighbors(win->map.size, win->map.cells);
 	if (!are_collectibles_and_exit_accessible(win))
 	{
-		ft_dprintf(2, "Error: The exit or a collectible cannot be reached\n");
+		dprintf(2, "Error: The exit or a collectible cannot be reached\n");
 		return (0);
 	}
 	return (1);
@@ -46,13 +46,13 @@ static void	set_map_size_and_name(t_win *win, char **ber, char *path)
 		++size.y;
 	}
 	set_ivec2(&win->map.size, size.x, size.y);
-	if (!ft_strchr(path, '/', 1))
-		win->map.name = ft_strdup(path);
+	if (!strrchr(path, '/'))
+		win->map.name = strdup(path);
 	else
-		win->map.name = ft_strdup(ft_strchr(path, '/', 1) + 1);
+		win->map.name = strdup(strrchr(path, '/') + 1);
 	if (win->map.name)
 	{
-		win->map.name[ft_strlen(win->map.name) - 4] = 0;
+		win->map.name[strlen(win->map.name) - 4] = 0;
 		if (!win->map.name[0])
 		{
 			free(win->map.name);
@@ -72,7 +72,7 @@ static int	create_map_array(t_win *win, char **ber)
 	win->map.cells = malloc(len);
 	if (!win->map.cells)
 		return (0);
-	ft_bzero(win->map.cells, len);
+	bzero(win->map.cells, len);
 	pos.y = 0;
 	while (pos.y < win->map.size.y)
 	{

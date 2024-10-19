@@ -1,7 +1,7 @@
 #include "grim_fetcher.h"
 
 #ifndef GNL_BUFFER_SIZE
-# define GNL_BUFFER_SIZE 42
+#define GNL_BUFFER_SIZE 1024
 #endif
 
 static int	search_newline(char *buffer, int fd, char **line, char **newline);
@@ -12,8 +12,8 @@ static void	shift_buffer(char *buffer, char *newline);
 /*
 	FEATURES
 	----------------------------------------------------------------------------
-	- GNL returns a dynamically allocated line read from an fd. A line either 
-	ends with '\n' (included) or EOF.
+	- GNL (Get Next Line) returns a dynamically allocated line read from an fd. 
+	A line either ends with '\n' (included) or EOF.
 	- If the function is called after EOF or if an error occurred, NULL is 
 	returned instead.
 	- GNL may retain some content that has been read but was after a newline. 
@@ -22,15 +22,14 @@ static void	shift_buffer(char *buffer, char *newline);
 	call. In order to avoid that, either finish reading with GNL, move the file 
 	offset with lseek, or close and reopen the file.
 	- If the fd changes, GNL empties its buffer. This prevents the content of 
-	the previous fd from bleeding into the returned line.
+	a previous fd from bleeding into the returned line.
 	- The buffer also empties if a negative fd is passed as argument. This 
 	comes in handy in the case of an opened file getting the same fd as a 
 	previously closed file which was read with GNL.
-	- It's UB to read from a binary file. Lines will be returned but their 
-	content may be funky.
+	- It's UB to read from a binary file.
 */
 
-char	*get_next_line(int fd)
+char	*gnl(int fd)
 {
 	static char	buffer[GNL_BUFFER_SIZE + 1];
 	static int	previous_fd;
@@ -62,7 +61,7 @@ static int	search_newline(char *buffer, int fd, char **line, char **newline)
 	ssize_t	read_amount;
 
 	*line = 0;
-	*newline = ft_strchr(buffer, '\n', 0);
+	*newline = strchr(buffer, '\n');
 	while (!*newline)
 	{
 		*line = add_to_line(*line, buffer, 0);
@@ -78,7 +77,7 @@ static int	search_newline(char *buffer, int fd, char **line, char **newline)
 			break ;
 		}
 		else
-			*newline = ft_strchr(buffer, '\n', 0);
+			*newline = strchr(buffer, '\n');
 	}
 	return (1);
 }
@@ -96,13 +95,13 @@ static char	*add_to_line(char *line, char *added, int free_added)
 	}
 	if (line)
 	{
-		len = ft_strlen(line) + ft_strlen(added);
+		len = strlen(line) + (!added ? 0 : strlen(added));
 		joined = malloc((len + 1) * sizeof(char));
 		if (joined)
 		{
 			joined[0] = 0;
-			ft_strlcat(joined, line, len + 1);
-			ft_strlcat(joined, added, len + 1);
+			strncat(joined, line, len + 1);
+			strncat(joined, added, len + 1);
 			free(line);
 			line = joined;
 		}
@@ -122,7 +121,7 @@ static char	*get_line(char *src, char *newline_in_src)
 	if (!dup)
 		return (0);
 	dup[0] = 0;
-	ft_strlcat(dup, src, len + 1);
+	strncat(dup, src, len + 1);
 	return (dup);
 }
 

@@ -33,17 +33,17 @@ void	move_player(t_win *win, t_ivec2 move)
 
 static void	orient_player(t_win *win, t_cell *player, t_ivec2 move)
 {
-	if ((move.x > 0 && !ft_strcmp(player->spr->id, "dog_idle_down_left"))
-		|| (move.y > 0 && !ft_strcmp(player->spr->id, "dog_idle_up_right")))
+	if ((move.x > 0 && !strcmp(player->spr->id, "dog_idle_down_left"))
+		|| (move.y > 0 && !strcmp(player->spr->id, "dog_idle_up_right")))
 		player->spr = &win->sprites[13];
-	else if ((move.x < 0 && !ft_strcmp(player->spr->id, "dog_idle_down_right"))
-		|| (move.y > 0 && !ft_strcmp(player->spr->id, "dog_idle_up_left")))
+	else if ((move.x < 0 && !strcmp(player->spr->id, "dog_idle_down_right"))
+		|| (move.y > 0 && !strcmp(player->spr->id, "dog_idle_up_left")))
 		player->spr = &win->sprites[14];
-	else if ((move.y < 0 && !ft_strcmp(player->spr->id, "dog_idle_down_right"))
-		|| (move.x > 0 && !ft_strcmp(player->spr->id, "dog_idle_up_left")))
+	else if ((move.y < 0 && !strcmp(player->spr->id, "dog_idle_down_right"))
+		|| (move.x > 0 && !strcmp(player->spr->id, "dog_idle_up_left")))
 		player->spr = &win->sprites[15];
-	else if ((move.y < 0 && !ft_strcmp(player->spr->id, "dog_idle_down_left"))
-		|| (move.x < 0 && !ft_strcmp(player->spr->id, "dog_idle_up_right")))
+	else if ((move.y < 0 && !strcmp(player->spr->id, "dog_idle_down_left"))
+		|| (move.x < 0 && !strcmp(player->spr->id, "dog_idle_up_right")))
 		player->spr = &win->sprites[16];
 	return ;
 }

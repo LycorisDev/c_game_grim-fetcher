@@ -9,8 +9,8 @@ int	create_background(t_win *win)
 	int		i;
 
 	s = &win->sprites[0];
-	ft_bzero(s, sizeof(t_spr));
-	s->id = ft_strdup("background");
+	bzero(s, sizeof(t_spr));
+	s->id = strdup("background");
 	if (!s->id)
 		return (0);
 	s->size.x = RES_WIDTH;
@@ -19,11 +19,11 @@ int	create_background(t_win *win)
 	s->cycle = malloc(s->cycle_len * sizeof(int *));
 	if (!s->cycle)
 		return (0);
-	ft_bzero(s->cycle, s->cycle_len * sizeof(int *));
+	bzero(s->cycle, s->cycle_len * sizeof(int *));
 	s->cycle[0] = malloc(s->size.x * s->size.y * sizeof(int));
 	if (!s->cycle[0])
 		return (0);
-	ft_bzero(s->cycle[0], s->size.x * s->size.y * sizeof(int));
+	bzero(s->cycle[0], s->size.x * s->size.y * sizeof(int));
 	i = 0;
 	while (i < s->size.x * s->size.y)
 		set_alpha(&s->cycle[0][i++], 255);

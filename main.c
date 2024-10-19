@@ -7,7 +7,7 @@ int	main(int argc, char **argv)
 {
 	t_win	win;
 
-	ft_bzero(&win, sizeof(t_win));
+	bzero(&win, sizeof(t_win));
 	win.mlx = mlx_init();
 	if (!win.mlx)
 		return (1);
@@ -15,7 +15,7 @@ int	main(int argc, char **argv)
 		|| !set_map_and_player(&win, argc, argv[1])
 		|| !create_window(&win, RES_WIDTH, RES_HEIGHT))
 	{
-		ft_dprintf(2, "Error: Failure during initialization\n");
+		dprintf(2, "Error: Failure during initialization\n");
 		release_resources(&win);
 		return (1);
 	}
@@ -31,7 +31,8 @@ int	main(int argc, char **argv)
 int	create_window(t_win *win, int width, int height)
 {
 	set_ivec2(&win->size, width, height);
-	win->win = mlx_new_window(win->mlx, win->size.x, win->size.y, "Grim Fetcher");
+	win->win = mlx_new_window(win->mlx, win->size.x, win->size.y,
+			"Grim Fetcher");
 	if (!win->win)
 		return (0);
 	if (!init_frame(win, 0) || !init_frame(win, 1) || !init_frame(win, 2))

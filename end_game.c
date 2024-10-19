@@ -13,12 +13,12 @@ void	game_over_screen(t_win *win, int victory)
 	set_ivec2(&pos, RES_WIDTH / 2, RES_HEIGHT / 2);
 	if (victory)
 	{
-		pos.x -= ft_strlen("You won! :D") / 2 * 8;
+		pos.x -= strlen("You won! :D") / 2 * 8;
 		draw_font_default(win, frame, &pos, "You won! :D");
 	}
 	else
 	{
-		pos.x -= ft_strlen("You got killed by a slime :(") / 2 * 7;
+		pos.x -= strlen("You got killed by a slime :(") / 2 * 7;
 		draw_font_default(win, frame, &pos, "You got killed by a slime :(");
 	}
 	on_mouse_move(win);

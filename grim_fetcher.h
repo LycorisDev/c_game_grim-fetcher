@@ -1,34 +1,35 @@
 #ifndef GRIM_FETCHER_H
-# define GRIM_FETCHER_H
+#define GRIM_FETCHER_H
 
-# include ".mlx/mlx.h"
-# include ".mlx/mlx_int.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdarg.h>
-# include <unistd.h>
-# include <fcntl.h>
+#include ".mlx/mlx.h"
+#include ".mlx/mlx_int.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <ctype.h>
 
-# define RES_WIDTH  640
-# define RES_HEIGHT 360
-# define SPRITE_LEN	63
+#define RES_WIDTH  640
+#define RES_HEIGHT 360
+#define SPRITE_LEN	63
 
-# define BTN_CLICK_LEFT  1
-# define BTN_CLICK_WHEEL 2
-# define BTN_CLICK_RIGHT 3
-# define BTN_SCROLL_UP   4
-# define BTN_SCROLL_DOWN 5
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_ENTER  65293
-# define KEY_ESCAPE 65307
-# define KEY_LEFT   65361
-# define KEY_UP     65362
-# define KEY_RIGHT  65363
-# define KEY_DOWN   65364
-# define KEY_F11    65480
+#define BTN_CLICK_LEFT  1
+#define BTN_CLICK_WHEEL 2
+#define BTN_CLICK_RIGHT 3
+#define BTN_SCROLL_UP   4
+#define BTN_SCROLL_DOWN 5
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_ENTER  65293
+#define KEY_ESCAPE 65307
+#define KEY_LEFT   65361
+#define KEY_UP     65362
+#define KEY_RIGHT  65363
+#define KEY_DOWN   65364
+#define KEY_F11    65480
 
 typedef unsigned char	t_ubyte;
 typedef unsigned int	t_uint;
@@ -225,28 +226,18 @@ int		rng_minmax(int *seed, int min, int max);
 double	get_dist_euclidean(double ax, double ay, double bx, double by);
 double	get_dist_manhattan(double ax, double ay, double bx, double by);
 
-/* Libft -------------------------------------------------------------------- */
+/* List -------------------------------------------------------------------- */
 
-int		ft_isspace(int c);
-int		ft_isdigit(int c);
-int		ft_isupper(int c);
-int		ft_islower(int c);
-size_t	ft_strlen(char *s);
-char	*ft_strchr(char *s, int c, int reverse);
-size_t	ft_strlcat(char *dest, char *src, size_t size);
-char	*ft_strdup(char *s);
-void	ft_bzero(void *s, size_t n);
-int		ft_atoi(char *n);
-int		ft_strcmp(char *s1, char *s2);
-int		ft_strncmp(char *s1, char *s2, size_t n);
-char	*ft_itoa(int number);
-char	*get_next_line(int fd);
-void	ft_dprintf(int fd, char *format, ...);
-t_list	*lst_new(void *content);
-void	lst_add_front(t_list **lst, t_list *new);
-int		lst_add_sorted(t_list **lst, t_list *new, int (*f)(void *, void *));
-void	lst_pop(t_list **lst, void (*del)(void *));
-void	lst_clear(t_list **lst, void (*del)(void *));
-int		lst_size(t_list *lst);
+t_list	*list_new(void *content);
+void	list_add_front(t_list **list, t_list *new);
+int		list_add_sorted(t_list **list, t_list *new, int (*f)(void *, void *));
+void	list_pop(t_list **list, void (*del)(void *));
+void	list_clear(t_list **list, void (*del)(void *));
+int		list_size(t_list *list);
+
+/* Misc -------------------------------------------------------------------- */
+
+char	*gnl(int fd);
+char	*itoa(int number);
 
 #endif

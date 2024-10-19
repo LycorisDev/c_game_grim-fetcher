@@ -36,7 +36,7 @@ int	create_sprites_from_file(t_win *win, t_xpm *file, int *i_spr)
 
 static int	set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg)
 {
-	s->id = ft_strdup(file->seg[i_seg].id);
+	s->id = strdup(file->seg[i_seg].id);
 	if (!s->id)
 		return (0);
 	set_ivec2(&s->size, file->seg[i_seg].size.x, file->seg[i_seg].size.y);
@@ -48,7 +48,7 @@ static int	set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg)
 	s->cycle = malloc(s->cycle_len * sizeof(t_uint *));
 	if (!s->cycle)
 		return (0);
-	ft_bzero(s->cycle, s->cycle_len * sizeof(t_uint *));
+	bzero(s->cycle, s->cycle_len * sizeof(t_uint *));
 	if (file->path_shadow)
 	{
 		s->cycle_shadow = malloc(s->cycle_len * sizeof(t_uint *));
@@ -58,7 +58,7 @@ static int	set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg)
 			s->cycle = 0;
 			return (0);
 		}
-		ft_bzero(s->cycle_shadow, s->cycle_len * sizeof(t_uint *));
+		bzero(s->cycle_shadow, s->cycle_len * sizeof(t_uint *));
 	}
 	return (allocate_cycles(s));
 }
@@ -75,13 +75,13 @@ static int	allocate_cycles(t_spr *s)
 		s->cycle[i] = malloc(len);
 		if (!s->cycle[i])
 			return (0);
-		ft_bzero(s->cycle[i], len);
+		bzero(s->cycle[i], len);
 		if (s->cycle_shadow)
 		{
 			s->cycle_shadow[i] = malloc(len);
 			if (!s->cycle_shadow[i])
 				return (0);
-			ft_bzero(s->cycle_shadow[i], len);
+			bzero(s->cycle_shadow[i], len);
 		}
 		++i;
 	}

@@ -24,7 +24,7 @@ void	draw_font_default(t_win *win, t_frame *frame, t_ivec2 *pos, char *str)
 	if (!str)
 		return ;
 	i = 0;
-	len = ft_strlen(str);
+	len = strlen(str);
 	s = &win->sprites[2];
 	fix_initial_pos(pos);
 	while (i <= len)
@@ -100,7 +100,7 @@ static void	alignment_left(char *str, int *i, t_ivec2 *pos)
 		return ;
 	}
 	i_curr_space = (pos->x - PAD) / SIZE_X;
-	p_next_space = ft_strchr(str + *i + 1, ' ', 0);
+	p_next_space = strchr(str + *i + 1, ' ');
 	if (p_next_space && i_curr_space + p_next_space - (str + *i) > 89)
 		pos->x += (89 - i_curr_space) * SIZE_X;
 	return ;

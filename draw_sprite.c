@@ -30,7 +30,7 @@ t_spr	*get_sprite(t_win *win, char *id)
 	i = 0;
 	while (win->sprites[i].id)
 	{
-		if (!ft_strcmp(win->sprites[i].id, id))
+		if (!strcmp(win->sprites[i].id, id))
 			return (&win->sprites[i]);
 		++i;
 	}

@@ -24,7 +24,7 @@ int	set_sprite_array(t_win *win, char *path)
 	i_spr = 1;
 	is_success = 1;
 	is_parsing_ongoing = 1;
-	ft_bzero(&file, sizeof(t_xpm));
+	bzero(&file, sizeof(t_xpm));
 	while (is_parsing_ongoing && is_success)
 	{
 		is_parsing_ongoing = set_xpm_file_obj(&file, fd);
@@ -33,7 +33,7 @@ int	set_sprite_array(t_win *win, char *path)
 		free_and_reset_xpm_data(&file);
 	}
 	close(fd);
-	get_next_line(-1);
+	gnl(-1);
 	return (is_success);
 }
 
@@ -42,10 +42,12 @@ char	*findc(char *s, char c)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	if (!c)
-		return (s + ft_strlen(s));
+		return (s + strlen(s));
 	i = 0;
-	while (s[i] && ft_isspace(s[i]))
+	while (s[i] && isspace(s[i]))
 		++i;
 	if (c < 0)
 		return (s + i);

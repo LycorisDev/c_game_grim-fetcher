@@ -16,7 +16,7 @@ void	free_and_reset_xpm_data(t_xpm *file)
 		++i;
 	}
 	free(file->seg);
-	ft_bzero(file, sizeof(t_xpm));
+	bzero(file, sizeof(t_xpm));
 	return ;
 }
 
@@ -74,6 +74,6 @@ void	release_resources(t_win *win)
 	free_sprites(win);
 	free(win->map.name);
 	free(win->map.cells);
-	lst_clear(&win->clicked_path, 0);
+	list_clear(&win->clicked_path, 0);
 	return ;
 }

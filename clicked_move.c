@@ -24,7 +24,7 @@ void	move_along_clicked_path(t_win *win, long dt)
 		move.x = ((t_cell *)win->clicked_path->content)->pos.x - win->p.pos.x;
 		move.y = ((t_cell *)win->clicked_path->content)->pos.y - win->p.pos.y;
 		move_player(win, move);
-		lst_pop(&win->clicked_path, 0);
+		list_pop(&win->clicked_path, 0);
 	}
 	return ;
 }

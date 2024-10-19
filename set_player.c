@@ -6,7 +6,7 @@ void	set_player(t_win *win)
 	int	x;
 	int	y;
 
-	ft_bzero(&win->p, sizeof(t_player));
+	bzero(&win->p, sizeof(t_player));
 	win->p.health = 100;
 	win->p.stamina = 100;
 	if (!win->map.cells)

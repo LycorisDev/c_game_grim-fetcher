@@ -15,11 +15,11 @@ int	are_collectibles_and_exit_accessible(t_win *win)
 		path = get_path(win, start, target->content);
 		if (!path)
 		{
-			lst_clear(&target, 0);
+			list_clear(&target, 0);
 			return (0);
 		}
-		lst_clear(&path, 0);
-		lst_pop(&target, 0);
+		list_clear(&path, 0);
+		list_pop(&target, 0);
 	}
 	return (1);
 }
@@ -44,11 +44,11 @@ static t_list	*find_targets(t_cell *map)
 	t_list	*list;
 
 	i = 0;
-	list = lst_new(find_cell_by_symbol(map, 'E'));
+	list = list_new(find_cell_by_symbol(map, 'E'));
 	while (map[i].symbol)
 	{
 		if (map[i].symbol == 'C')
-			lst_add_front(&list, lst_new(&map[i]));
+			list_add_front(&list, list_new(&map[i]));
 		++i;
 	}
 	return (list);

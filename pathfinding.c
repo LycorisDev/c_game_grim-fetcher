@@ -13,23 +13,23 @@ t_list	*get_path(t_win *win, t_cell *start, t_cell *end)
 
 	reset_astar_data(&win->map, start, end);
 	curr = start;
-	list = lst_new(start);
+	list = list_new(start);
 	while (list && curr != end)
 	{
 		while (list && ((t_cell *)(list->content))->is_visited)
-			lst_pop(&list, 0);
+			list_pop(&list, 0);
 		if (!list)
 			break ;
 		curr = list->content;
 		curr->is_visited = 1;
 		neighbors(&win->map, &list, curr, end);
 	}
-	lst_clear(&list, 0);
+	list_clear(&list, 0);
 	if (!end->parent)
 		return (0);
 	while (end != start)
 	{
-		lst_add_front(&list, lst_new(end));
+		list_add_front(&list, list_new(end));
 		end = end->parent;
 	}
 	return (list);
@@ -97,7 +97,7 @@ static void	neighbors(t_map *map, t_list **list, t_cell *curr, t_cell *end)
 				n->parent = curr;
 				n->local_goal = goal;
 				n->global_goal = n->local_goal + heuristic(map, n, end);
-				lst_add_sorted(list, lst_new(n), cmp_global_goal);
+				list_add_sorted(list, list_new(n), cmp_global_goal);
 			}
 		}
 		++i;
