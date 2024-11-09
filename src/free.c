@@ -1,6 +1,6 @@
 #include "grim_fetcher.h"
 
-void free_and_reset_xpm_data(t_xpm *file)
+void free_and_reset_img_data(t_xpm *file)
 {
     int i;
 

@@ -34,6 +34,12 @@
 typedef unsigned char t_ubyte;
 typedef unsigned int t_uint;
 
+typedef struct s_uivec2
+{
+    t_uint x;
+    t_uint y;
+} t_uivec2;
+
 typedef struct s_ivec2
 {
     int x;
@@ -149,6 +155,12 @@ typedef struct s_xpm
     t_xpm_seg *seg;
 } t_xpm;
 
+typedef struct s_png
+{
+    t_ivec2  size;
+    t_ubyte  *buf;
+} t_png;
+
 /* Init --------------------------------------------------------------------- */
 
 int     set_sprite_array(t_win *win, char *path);
@@ -158,7 +170,7 @@ void    add_outline_to_font(t_spr *font);
 
 /* Deinit ------------------------------------------------------------------- */
 
-void    free_and_reset_xpm_data(t_xpm *file);
+void    free_and_reset_img_data(t_xpm *file);
 void    free_sprites(t_win *win);
 void    free_ber_data(char **ber);
 void    release_resources(t_win *win);
@@ -238,14 +250,16 @@ int     list_size(t_list *list);
 
 /* Misc --------------------------------------------------------------------- */
 
+t_png*  load_image_from_file(char* png_path);
+void    free_image(t_png* img);
+
 int     get_ber_fd(int argc, char *path);
 char    **copy_ber(int *fd, char *path);
 char    **get_ber_data(int argc, char *path);
 t_spr   *get_spr_by_symbol(t_win *win, char symbol);
 int     are_collectibles_and_exit_accessible(t_win *win);
 int     create_background(t_win *win);
-int     set_xpm_file_obj(t_xpm *file, int fd);
-int     get_color_bpp(t_img *img, size_t i, int is_shadow);
+int     set_img_file_obj(t_xpm *file, int fd);
 int     create_sprites_from_file(t_win *win, t_xpm *file, int *i_spr);
 
 #endif

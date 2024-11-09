@@ -1,9 +1,9 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 BIN = grim_fetcher
 
 HDR = grim_fetcher.h
-SRC = $(wildcard src/*.c) $(wildcard src/*/*.c)
+SRC = $(wildcard lib/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
 OBJ = $(SRC:.c=.o)
 
 MLX_DIR = .mlx

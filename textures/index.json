@@ -1,6 +1,6 @@
 [
     {
-        "path": "textures/mg_cursor.xpm",
+        "path": "textures/mg_cursor.png",
         "path_shadow": "",
         "segment_len": 1,
         "segments": [
@@ -19,7 +19,7 @@
         ]
     },
     {
-        "path": "textures/monogram.xpm",
+        "path": "textures/monogram.png",
         "path_shadow": "",
         "segment_len": 1,
         "segments": [
@@ -132,7 +132,7 @@
         ]
     },
     {
-        "path": "textures/md_tileset.xpm",
+        "path": "textures/md_tileset.png",
         "path_shadow": "",
         "segment_len": 7,
         "segments": [
@@ -216,8 +216,8 @@
         ]
     },
     {
-        "path": "textures/mc_soul.xpm",
-        "path_shadow": "textures/mc_soul_shadow.xpm",
+        "path": "textures/mc_soul.png",
+        "path_shadow": "textures/mc_soul_shadow.png",
         "segment_len": 3,
         "segments": [
             {
@@ -273,8 +273,8 @@
         ]
     },
     {
-        "path": "textures/mc_dog.xpm",
-        "path_shadow": "textures/mc_dog_shadow.xpm",
+        "path": "textures/mc_dog.png",
+        "path_shadow": "textures/mc_dog_shadow.png",
         "segment_len": 21,
         "segments": [
             {
@@ -611,8 +611,8 @@
         ]
     },
     {
-        "path": "textures/mc_zombie.xpm",
-        "path_shadow": "textures/mc_zombie_shadow.xpm",
+        "path": "textures/mc_zombie.png",
+        "path_shadow": "textures/mc_zombie_shadow.png",
         "segment_len": 2,
         "segments": [
             {
@@ -668,8 +668,8 @@
         ]
     },
     {
-        "path": "textures/mc_slime_blue.xpm",
-        "path_shadow": "textures/mc_slime_blue_shadow.xpm",
+        "path": "textures/mc_slime_blue.png",
+        "path_shadow": "textures/mc_slime_blue_shadow.png",
         "segment_len": 13,
         "segments": [
             {
@@ -878,8 +878,8 @@
         ]
     },
     {
-        "path": "textures/mc_slime_green.xpm",
-        "path_shadow": "textures/mc_slime_green_shadow.xpm",
+        "path": "textures/mc_slime_green.png",
+        "path_shadow": "textures/mc_slime_green_shadow.png",
         "segment_len": 13,
         "segments": [
             {

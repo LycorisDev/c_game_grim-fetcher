@@ -7,7 +7,7 @@ static int  set_info_vars(char *line, char **field, char **data, char **dup);
 static int  segment(t_xpm_seg *seg, char *field, char *data, char *dup);
 static void allocate_segment_cycle(t_xpm_seg *seg);
 
-int set_xpm_file_obj(t_xpm *file, int fd)
+int set_img_file_obj(t_xpm *file, int fd)
 {
     int  seg;
     int  in_cycle;
