@@ -1,11 +1,11 @@
 #include "grim_fetcher.h"
 
-static int  set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg);
+static int  set_sprite_from_segment(t_spr *s, t_img *file, int i_seg);
 static int  allocate_cycles(t_spr *s);
-static void cut_sprite(t_xpm *file, t_spr *s, int i_seg, int i_cyc);
-static void cut_sprite_shadow(t_xpm *file, t_spr *s, int i_seg, int i_cyc);
+static void cut_sprite(t_img *file, t_spr *s, int i_seg, int i_cyc);
+static void cut_sprite_shadow(t_img *file, t_spr *s, int i_seg, int i_cyc);
 
-int create_sprites_from_file(t_xpm *file, int *i_spr)
+int create_sprites_from_file(t_img *file, int *i_spr)
 {
     int   i;
     int   j;
@@ -59,7 +59,7 @@ void free_sprites(void)
     return;
 }
 
-static int set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg)
+static int set_sprite_from_segment(t_spr *s, t_img *file, int i_seg)
 {
     s->id = strdup(file->seg[i_seg].id);
     if (!s->id)
@@ -113,7 +113,7 @@ static int allocate_cycles(t_spr *s)
     return 1;
 }
 
-static void cut_sprite(t_xpm *file, t_spr *s, int i_seg, int i_cyc)
+static void cut_sprite(t_img *file, t_spr *s, int i_seg, int i_cyc)
 {
     int     i;
     int     line;
@@ -142,7 +142,7 @@ static void cut_sprite(t_xpm *file, t_spr *s, int i_seg, int i_cyc)
     return;
 }
 
-static void cut_sprite_shadow(t_xpm *file, t_spr *s, int i_seg, int i_cyc)
+static void cut_sprite_shadow(t_img *file, t_spr *s, int i_seg, int i_cyc)
 {
     int     i;
     int     line;

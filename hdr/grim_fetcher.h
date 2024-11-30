@@ -103,6 +103,34 @@ typedef struct s_map
     t_cell  *cells;
 } t_map;
 
+typedef struct s_img_seg
+{
+    char    *id;
+    t_ivec2 size;
+    t_ivec2 shadow_offset;
+    int     still_frame;
+    int     cycle_len;
+    long    cycle_time_in_ms;
+    t_ivec2 *cycle;
+} t_img_seg;
+
+typedef struct s_img
+{
+    char      *path;
+    char      *path_shadow;
+    t_ivec2   size;
+    t_color   *data;
+    t_color   *data_shadow;
+    int       segment_len;
+    t_img_seg *seg;
+} t_img;
+
+typedef struct s_png
+{
+    t_ivec2  size;
+    t_ubyte  *buf;
+} t_png;
+
 typedef struct s_frame
 {
     GLuint   id;
@@ -145,34 +173,6 @@ typedef struct s_man
     t_list     *clicked_path;
 } t_man;
 
-typedef struct s_xpm_seg
-{
-    char    *id;
-    t_ivec2 size;
-    t_ivec2 shadow_offset;
-    int     still_frame;
-    int     cycle_len;
-    long    cycle_time_in_ms;
-    t_ivec2 *cycle;
-} t_xpm_seg;
-
-typedef struct s_xpm
-{
-    char      *path;
-    char      *path_shadow;
-    t_ivec2   size;
-    t_color   *data;
-    t_color   *data_shadow;
-    int       segment_len;
-    t_xpm_seg *seg;
-} t_xpm;
-
-typedef struct s_png
-{
-    t_ivec2  size;
-    t_ubyte  *buf;
-} t_png;
-
 extern t_man man;
 
 /* Init --------------------------------------------------------------------- */
@@ -190,8 +190,8 @@ int        are_collectibles_and_exit_accessible(void);
 t_png      *load_image_from_file(char* png_path);
 void       free_image(t_png* img);
 int        create_background(void);
-int        set_img_file_obj(t_xpm *file, int fd);
-int        create_sprites_from_file(t_xpm *file, int *i_spr);
+int        set_img_file_obj(t_img *file, int fd);
+int        create_sprites_from_file(t_img *file, int *i_spr);
 void       free_sprites(void);
 int        create_mesh(void);
 void       render_mesh(void);

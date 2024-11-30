@@ -1,9 +1,9 @@
 #include "grim_fetcher.h"
 
-static int     set_pixel_data(t_xpm *file, int *i_spr);
-static t_color *get_pixel_data(t_xpm *file, int is_shadow);
+static int     set_pixel_data(t_img *file, int *i_spr);
+static t_color *get_pixel_data(t_img *file, int is_shadow);
 static t_color get_pixel(t_png *img, size_t i, int is_shadow);
-static void    free_and_reset_img_data(t_xpm *file);
+static void    free_and_reset_img_data(t_img *file);
 
 int set_sprite_array(char *path)
 {
@@ -11,7 +11,7 @@ int set_sprite_array(char *path)
     int   i_spr;
     int   is_success;
     int   is_parsing_ongoing;
-    t_xpm file;
+    t_img file;
 
     if (!create_background())
         return 0;
@@ -21,7 +21,7 @@ int set_sprite_array(char *path)
     i_spr = 1;
     is_success = 1;
     is_parsing_ongoing = 1;
-    bzero(&file, sizeof(t_xpm));
+    bzero(&file, sizeof(t_img));
     while (is_parsing_ongoing && is_success)
     {
         is_parsing_ongoing = set_img_file_obj(&file, fd);
@@ -34,7 +34,7 @@ int set_sprite_array(char *path)
     return is_success;
 }
 
-static int set_pixel_data(t_xpm *file, int *i_spr)
+static int set_pixel_data(t_img *file, int *i_spr)
 {
     file->data = get_pixel_data(file, 0);
     if (file->path_shadow)
@@ -45,7 +45,7 @@ static int set_pixel_data(t_xpm *file, int *i_spr)
     return 1;
 }
 
-static t_color *get_pixel_data(t_xpm *file, int is_shadow)
+static t_color *get_pixel_data(t_img *file, int is_shadow)
 {
     size_t  i;
     size_t  data_len;
@@ -92,7 +92,7 @@ static t_color get_pixel(t_png *img, size_t i, int is_shadow)
     return get_color_rgba(red, green, blue, alpha);
 }
 
-static void free_and_reset_img_data(t_xpm *file)
+static void free_and_reset_img_data(t_img *file)
 {
     int i;
 
@@ -108,6 +108,6 @@ static void free_and_reset_img_data(t_xpm *file)
         ++i;
     }
     free(file->seg);
-    bzero(file, sizeof(t_xpm));
+    bzero(file, sizeof(t_img));
     return;
 }

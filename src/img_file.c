@@ -1,13 +1,13 @@
 #include "grim_fetcher.h"
 
-static int cycle(char *line, t_xpm_seg *seg);
+static int cycle(char *line, t_img_seg *seg);
 static char *findc(char *s, char c);
-static void field(t_xpm *file, char *line, int seg, int *in_cycle);
+static void field(t_img *file, char *line, int seg, int *in_cycle);
 static int  set_info_vars(char *line, char **field, char **data, char **dup);
-static int  segment(t_xpm_seg *seg, char *field, char *data, char *dup);
-static void allocate_segment_cycle(t_xpm_seg *seg);
+static int  segment(t_img_seg *seg, char *field, char *data, char *dup);
+static void allocate_segment_cycle(t_img_seg *seg);
 
-int set_img_file_obj(t_xpm *file, int fd)
+int set_img_file_obj(t_img *file, int fd)
 {
     int  seg;
     int  in_cycle;
@@ -34,7 +34,7 @@ int set_img_file_obj(t_xpm *file, int fd)
     return line != 0;
 }
 
-static int cycle(char *line, t_xpm_seg *seg)
+static int cycle(char *line, t_img_seg *seg)
 {
     static int index;
     char       *data;
@@ -73,7 +73,7 @@ static char *findc(char *s, char c)
     return 0;
 }
 
-static void field(t_xpm *file, char *line, int seg, int *in_cycle)
+static void field(t_img *file, char *line, int seg, int *in_cycle)
 {
     char *field;
     char *data;
@@ -88,7 +88,7 @@ static void field(t_xpm *file, char *line, int seg, int *in_cycle)
     else if (!strncmp(field, "segment_len", 11))
     {
         file->segment_len = atoi(data);
-        file->seg = malloc(file->segment_len * sizeof(t_xpm_seg));
+        file->seg = malloc(file->segment_len * sizeof(t_img_seg));
     }
     else if (file->seg)
     {
@@ -126,7 +126,7 @@ static int set_info_vars(char *line, char **field, char **data, char **dup)
     return 1;
 }
 
-static int segment(t_xpm_seg *seg, char *field, char *data, char *dup)
+static int segment(t_img_seg *seg, char *field, char *data, char *dup)
 {
     if (!strncmp(field, "id", 2))
         seg->id = dup;
@@ -145,7 +145,7 @@ static int segment(t_xpm_seg *seg, char *field, char *data, char *dup)
     return 1;
 }
 
-static void allocate_segment_cycle(t_xpm_seg *seg)
+static void allocate_segment_cycle(t_img_seg *seg)
 {
     int i;
 
