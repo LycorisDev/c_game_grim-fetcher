@@ -6,7 +6,7 @@ static void    set_ivec2_vals(t_ivec2 *cs, t_ivec2 *op, t_ivec2 *p);
 static t_ivec2 get_elem_pos(t_ivec2 i, t_ivec2 pos);
 static void    draw_ground(t_frame *frame, t_ivec2 pos);
 
-int render_loop(void)
+int render(void)
 {
     long    dt;
     t_frame *frame;

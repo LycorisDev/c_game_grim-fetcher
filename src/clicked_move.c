@@ -29,26 +29,6 @@ void move_along_clicked_path(long dt)
     return;
 }
 
-t_ivec2 slime_get_move_to_kill_player(t_cell *slime)
-{
-    t_ivec2 move;
-    int     i;
-
-    i = 0;
-    while (i < 4)
-    {
-        if (slime->neighbors[i]->symbol == 'P')
-        {
-            set_ivec2(&move, slime->neighbors[i]->pos.x - slime->pos.x,
-                slime->neighbors[i]->pos.y - slime->pos.y);
-            return move;
-        }
-        ++i;
-    }
-    set_ivec2(&move, 0, 0);
-    return move;
-}
-
 static t_list *get_clicked_path(void)
 {
     t_cell  *player_cell;

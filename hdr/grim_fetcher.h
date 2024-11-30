@@ -224,7 +224,7 @@ int        cmp_color(t_color a, t_color b);
 void       use_frame(t_frame* f);
 void       clear_drawing(t_frame *f, GLubyte alpha);
 void       save_drawing(t_frame* f);
-int        render_loop(void);
+int        render(void);
 long       get_delta_time(void);
 t_spr      *get_sprite(char *id);
 t_spr      *get_spr_by_symbol(char symbol);
@@ -245,7 +245,6 @@ t_cell     *find_cell_by_symbol(t_cell *map, char symbol);
 void       move_player(int x, int y);
 void       move_symbol(t_map *map, t_ivec2 start, t_ivec2 end);
 void       move_slimes(long dt);
-t_ivec2    slime_get_move_to_kill_player(t_cell *slime);
 
 /* Math --------------------------------------------------------------------- */
 

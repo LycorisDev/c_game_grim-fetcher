@@ -19,7 +19,7 @@ int main(int argc, char **argv)
         update_time_variables();
         glClear(GL_COLOR_BUFFER_BIT);
         clear_drawing(man.frame[man.curr_frame], 255);
-        render_loop();
+        render();
         save_drawing(man.frame[man.curr_frame]);
         render_mesh();
         man.curr_frame = (man.curr_frame + 1) % 2;
