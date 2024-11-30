@@ -1,10 +1,10 @@
 #include "grim_fetcher.h"
 #include "../lib/lodepng.h"
 
-t_png* load_image_from_file(char* png_path)
+t_png *load_image_from_file(char *png_path)
 {
-    t_png    *img;
-    t_uivec2 size;
+    t_png        *img;
+    t_uivec2     size;
     unsigned int err;
     
     img = malloc(sizeof(t_png));
@@ -23,7 +23,7 @@ t_png* load_image_from_file(char* png_path)
     return img;
 }
 
-void free_image(t_png* img)
+void free_image(t_png *img)
 {
     if (img)
         free(img->buf);

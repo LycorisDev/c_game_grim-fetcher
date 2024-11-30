@@ -2,17 +2,17 @@
 
 static t_list *find_targets(t_cell *map);
 
-int are_collectibles_and_exit_accessible(t_win *win)
+int are_collectibles_and_exit_accessible(void)
 {
     t_list *path;
     t_cell *start;
     t_list *target;
 
-    start = find_cell_by_symbol(win->map.cells, 'P');
-    target = find_targets(win->map.cells);
+    start = find_cell_by_symbol(man.map.cells, 'P');
+    target = find_targets(man.map.cells);
     while (target)
     {
-        path = get_path(win, start, target->content);
+        path = get_path(start, target->data);
         if (!path)
         {
             list_clear(&target, 0);

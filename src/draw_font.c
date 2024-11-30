@@ -15,7 +15,7 @@ static void alignment_left(char *str, int *i, t_ivec2 *pos);
     The capacity is 90 characters per line ([0-89]).
     The index is the result of `(pos->x - PAD) / SIZE_X`.
 */
-void draw_font_default(t_win *win, t_frame *frame, t_ivec2 *pos, char *str)
+void draw_font_default(t_frame *frame, t_ivec2 *pos, char *str)
 {
     int   i;
     int   len;
@@ -25,7 +25,7 @@ void draw_font_default(t_win *win, t_frame *frame, t_ivec2 *pos, char *str)
         return;
     i = 0;
     len = strlen(str);
-    s = &win->sprites[2];
+    s = &man.sprites[2];
     fix_initial_pos(pos);
     while (i <= len)
     {
@@ -80,7 +80,7 @@ static void draw_char(t_frame *frame, t_spr *sprite, t_ivec2 pos)
         p.y = i / sprite->size.x;
         p.x = i - p.y * sprite->size.x;
         set_ivec2(&p, p.x + pos.x, p.y + pos.y);
-        draw_point(frame, sprite->cycle[sprite->cycle_index][i], p);
+        draw_point(frame, sprite->cycle[sprite->cycle_index][i], p.x, p.y);
         ++i;
     }
     return;

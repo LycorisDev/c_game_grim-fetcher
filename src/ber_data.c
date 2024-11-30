@@ -23,6 +23,20 @@ char **get_ber_data(int argc, char *path)
     return ber;
 }
 
+void free_ber_data(char **ber)
+{
+    char **ptr;
+
+    ptr = ber;
+    while (*ber)
+    {
+        free(*ber);
+        ++ber;
+    }
+    free(ptr);
+    return;
+}
+
 static int are_symbols_valid(char **ber)
 {
     size_t i;

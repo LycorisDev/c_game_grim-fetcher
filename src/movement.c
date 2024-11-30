@@ -1,8 +1,8 @@
 #include "grim_fetcher.h"
 
-static t_cell  *get_slime(t_win *win, int *i);
+static t_cell  *get_slime(int *i);
 static t_ivec2 get_move(int rng);
-static void    move_slime(t_win *win, t_cell *cell, t_ivec2 move);
+static void    move_slime(t_cell *cell, t_ivec2 move);
 
 void move_symbol(t_map *map, t_ivec2 start, t_ivec2 end)
 {
@@ -20,14 +20,14 @@ void move_symbol(t_map *map, t_ivec2 start, t_ivec2 end)
     return;
 }
 
-void move_slimes(t_win *win, long dt)
+void move_slimes(long dt)
 {
     static long ms;
     static int  i;
     t_cell      *slime;
     t_ivec2     move;
 
-    slime = get_slime(win, &i);
+    slime = get_slime(&i);
     if (!slime)
         return;
     move = slime_get_move_to_kill_player(slime);
@@ -39,26 +39,26 @@ void move_slimes(t_win *win, long dt)
         ms -= 750;
         move = get_move((int)dt);
     }
-    move_slime(win, slime, move);
+    move_slime(slime, move);
     return;
 }
 
-static t_cell *get_slime(t_win *win, int *i)
+static t_cell *get_slime(int *i)
 {
     t_cell *slime;
 
     slime = 0;
-    while (win->map.cells[*i].symbol)
+    while (man.map.cells[*i].symbol)
     {
-        if (win->map.cells[*i].symbol == 'B'
-            || win->map.cells[*i].symbol == 'G')
+        if (man.map.cells[*i].symbol == 'B'
+            || man.map.cells[*i].symbol == 'G')
         {
-            slime = &win->map.cells[*i];
+            slime = &man.map.cells[*i];
             break;
         }
         ++*i;
     }
-    if (!win->map.cells[*i].symbol)
+    if (!man.map.cells[*i].symbol)
         *i = 0;
     return slime;
 }
@@ -80,16 +80,16 @@ static t_ivec2 get_move(int rng)
     return move;
 }
 
-static void move_slime(t_win *win, t_cell *cell, t_ivec2 move)
+static void move_slime(t_cell *cell, t_ivec2 move)
 {
     t_ivec2 target;
     char    symbol;
 
     set_ivec2(&target, cell->pos.x + move.x, cell->pos.y + move.y);
-    symbol = win->map.cells[target.y * win->map.size.x + target.x].symbol;
+    symbol = man.map.cells[target.y * man.map.size.x + target.x].symbol;
     if (symbol == 'P')
-        win->game_over = -1;
+        man.game_over = -1;
     else if (symbol == '0')
-        move_symbol(&win->map, cell->pos, target);
+        move_symbol(&man.map, cell->pos, target);
     return;
 }

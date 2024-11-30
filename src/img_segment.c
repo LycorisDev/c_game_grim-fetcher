@@ -5,20 +5,20 @@ static int  allocate_cycles(t_spr *s);
 static void cut_sprite(t_xpm *file, t_spr *s, int i_seg, int i_cyc);
 static void cut_sprite_shadow(t_xpm *file, t_spr *s, int i_seg, int i_cyc);
 
-int create_sprites_from_file(t_win *win, t_xpm *file, int *i_spr)
+int create_sprites_from_file(t_xpm *file, int *i_spr)
 {
     int   i;
     int   j;
     t_spr *s;
 
     i = 0;
-    s = &win->sprites[*i_spr];
+    s = &man.sprites[*i_spr];
     while (i < file->segment_len)
     {
-        s = &win->sprites[*i_spr];
+        s = &man.sprites[*i_spr];
         if (!set_sprite_from_segment(s, file, i))
         {
-            free_sprites(win);
+            free_sprites();
             return 0;
         }
         j = 0;
@@ -34,6 +34,31 @@ int create_sprites_from_file(t_win *win, t_xpm *file, int *i_spr)
     return 1;
 }
 
+void free_sprites(void)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < SPRITE_LEN)
+    {
+        free(man.sprites[i].id);
+        j = 0;
+        while (j < man.sprites[i].cycle_len)
+        {
+            if (man.sprites[i].cycle)
+                free(man.sprites[i].cycle[j]);
+            if (man.sprites[i].cycle_shadow)
+                free(man.sprites[i].cycle_shadow[j]);
+            ++j;
+        }
+        free(man.sprites[i].cycle);
+        free(man.sprites[i].cycle_shadow);
+        ++i;
+    }
+    return;
+}
+
 static int set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg)
 {
     s->id = strdup(file->seg[i_seg].id);
@@ -45,20 +70,20 @@ static int set_sprite_from_segment(t_spr *s, t_xpm *file, int i_seg)
     s->still_frame = file->seg[i_seg].still_frame;
     s->cycle_time_in_ms = file->seg[i_seg].cycle_time_in_ms;
     s->cycle_len = file->seg[i_seg].cycle_len;
-    s->cycle = malloc(s->cycle_len * sizeof(t_uint *));
+    s->cycle = malloc(s->cycle_len * sizeof(t_color *));
     if (!s->cycle)
         return 0;
-    bzero(s->cycle, s->cycle_len * sizeof(t_uint *));
+    bzero(s->cycle, s->cycle_len * sizeof(t_color *));
     if (file->path_shadow)
     {
-        s->cycle_shadow = malloc(s->cycle_len * sizeof(t_uint *));
+        s->cycle_shadow = malloc(s->cycle_len * sizeof(t_color *));
         if (!s->cycle_shadow)
         {
             free(s->cycle);
             s->cycle = 0;
             return 0;
         }
-        bzero(s->cycle_shadow, s->cycle_len * sizeof(t_uint *));
+        bzero(s->cycle_shadow, s->cycle_len * sizeof(t_color *));
     }
     return allocate_cycles(s);
 }
@@ -69,7 +94,7 @@ static int allocate_cycles(t_spr *s)
     size_t len;
 
     i = 0;
-    len = s->size.x * s->size.y * sizeof(t_uint);
+    len = s->size.x * s->size.y * sizeof(t_color);
     while (i < s->cycle_len)
     {
         s->cycle[i] = malloc(len);
@@ -93,8 +118,8 @@ static void cut_sprite(t_xpm *file, t_spr *s, int i_seg, int i_cyc)
     int     i;
     int     line;
     t_ivec2 pos;
-    t_uint  *file_ptr;
-    t_uint  *cycle_ptr;
+    t_color *file_ptr;
+    t_color *cycle_ptr;
 
     if (!file->seg[i_seg].cycle)
         return;
@@ -122,8 +147,8 @@ static void cut_sprite_shadow(t_xpm *file, t_spr *s, int i_seg, int i_cyc)
     int     i;
     int     line;
     t_ivec2 pos;
-    t_uint  *file_ptr;
-    t_uint  *cycle_ptr;
+    t_color *file_ptr;
+    t_color *cycle_ptr;
 
     if (!file->seg[i_seg].cycle || !s->cycle_shadow)
         return;

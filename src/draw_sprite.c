@@ -23,15 +23,15 @@ void draw_sprite(t_frame *frame, t_spr *sprite, t_ivec2 pos, long dt_ms)
     return;
 }
 
-t_spr *get_sprite(t_win *win, char *id)
+t_spr *get_sprite(char *id)
 {
     int i;
 
     i = 0;
-    while (win->sprites[i].id)
+    while (man.sprites[i].id)
     {
-        if (!strcmp(win->sprites[i].id, id))
-            return &win->sprites[i];
+        if (!strcmp(man.sprites[i].id, id))
+            return &man.sprites[i];
         ++i;
     }
     return 0;
@@ -41,7 +41,7 @@ void copy_frame(t_frame *dst, t_frame *src, int zoom_factor)
 {
     t_ivec2 dst_pos;
     t_ivec2 src_pos;
-    char    *addr;
+    t_color color;
 
     if (zoom_factor < 1)
         return;
@@ -53,9 +53,8 @@ void copy_frame(t_frame *dst, t_frame *src, int zoom_factor)
         {
             src_pos.x = dst_pos.x / zoom_factor;
             src_pos.y = dst_pos.y / zoom_factor;
-            addr = src->addr + (src_pos.y * src->line_length
-                    + src_pos.x * (src->bpp / 8));
-            put_pixel(dst, *(t_uint *)addr, dst_pos.x, dst_pos.y);
+            color = get_frame_color(src, src_pos.x, src_pos.y);
+            draw_point(dst, color, dst_pos.x, dst_pos.y);
             ++dst_pos.x;
         }
         ++dst_pos.y;
@@ -78,7 +77,7 @@ static void draw_shadow(t_frame *frame, t_spr *sprite, t_ivec2 pos)
         p.y = i / sprite->size.x;
         p.x = i - p.y * sprite->size.x;
         set_ivec2(&p, p.x + pos.x, p.y + pos.y);
-        draw_point(frame, sprite->cycle_shadow[sprite->cycle_index][i], p);
+        draw_point(frame, sprite->cycle_shadow[sprite->cycle_index][i], p.x, p.y);
         ++i;
     }
     return;
@@ -97,7 +96,7 @@ static void draw_regular(t_frame *frame, t_spr *sprite, t_ivec2 pos)
         p.y = i / sprite->size.x;
         p.x = i - p.y * sprite->size.x;
         set_ivec2(&p, p.x + pos.x, p.y + pos.y);
-        draw_point(frame, sprite->cycle[sprite->cycle_index][i], p);
+        draw_point(frame, sprite->cycle[sprite->cycle_index][i], p.x, p.y);
         ++i;
     }
     return;

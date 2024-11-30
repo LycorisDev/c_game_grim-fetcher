@@ -1,25 +1,20 @@
 CC = cc
 CFLAGS = -Wall -Wextra
+LDFLAGS = -lm -lGL -lglfw
 BIN = grim_fetcher
 
-HDR = grim_fetcher.h
+HDR_DIR = hdr
+HDR = $(HDR_DIR)/grim_fetcher.h
 SRC = $(wildcard lib/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
 OBJ = $(SRC:.c=.o)
 
-MLX_DIR = .mlx
-MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11
-
-all: $(MLX_LIB) $(BIN)
-
-$(MLX_LIB):
-	@make -s -C $(MLX_DIR)
+all: $(BIN)
 
 $(BIN): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@ $(MLX_FLAGS)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o: %.c $(HDR)
-	$(CC) $(CFLAGS) -I. -o $@ -c $<
+	$(CC) $(CFLAGS) -I$(HDR_DIR) -o $@ -c $<
 
 .PHONY: clean fclean re
 

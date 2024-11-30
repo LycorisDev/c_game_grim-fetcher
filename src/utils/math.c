@@ -10,6 +10,23 @@ double f_clamp(double number, double min, double max)
     return number < min ? min : number > max ? max : number;
 }
 
+double f_floor(double number)
+{
+    return (int)number;
+}
+
+double f_ceil(double number)
+{
+    return (int)number + 1;
+}
+
+double f_round(double number)
+{
+    if (number - (int)number < 0.5)
+        return f_floor(number);
+    return f_ceil(number);
+}
+
 double f_pow(double base, double exp)
 {
     double res;
@@ -42,13 +59,13 @@ double f_sqrt(double number)
     return x * number;
 }
 
-// Euclidean distance (all directions)
+/* Euclidean distance (all directions) */
 double f_dist_euclidean(double ax, double ay, double bx, double by)
 {
     return f_sqrt(f_pow(ax - bx, 2) + f_pow(ay - by, 2));
 }
 
-// Manhattan distance (no diagonal)
+/* Manhattan distance (no diagonal) */
 double f_dist_manhattan(double ax, double ay, double bx, double by)
 {
     return f_abs(ax - bx) + f_abs(ay - by);
@@ -59,12 +76,22 @@ int i_abs(int number)
     return number < 0 ? -number : number;
 }
 
+int i_min(int a, int b)
+{
+    return a < b ? a : b;
+}
+
 int i_max(int a, int b)
 {
     return a > b ? a : b;
 }
 
-// Simple 32-bit Xorshift pseudo-RNG
+int i_clamp(int number, int min, int max)
+{
+    return number < min ? min : number > max ? max : number;
+}
+
+/* Simple 32-bit Xorshift pseudo-RNG */
 int rng_minmax(int *seed, int min, int max)
 {
     unsigned int random;

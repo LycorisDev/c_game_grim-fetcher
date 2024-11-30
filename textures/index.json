@@ -225,7 +225,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 3,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 0],
@@ -239,7 +239,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 9,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 200,
                 "cycle_len": 12,
                 "cycle": [
                     [0, 32],
@@ -261,7 +261,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 3,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 150,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 64],
@@ -677,7 +677,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 0],
@@ -695,7 +695,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 32],
@@ -713,7 +713,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 64],
@@ -731,7 +731,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 96],
@@ -749,7 +749,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 128],
@@ -763,7 +763,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 160],
@@ -777,7 +777,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 192],
@@ -791,7 +791,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 224],
@@ -805,7 +805,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 256],
@@ -819,7 +819,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 288],
@@ -833,7 +833,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 320],
@@ -847,7 +847,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 352],
@@ -861,7 +861,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 7,
-                "cycle_time_in_ms": 100,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 9,
                 "cycle": [
                     [0, 384],
@@ -887,7 +887,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 0],
@@ -905,7 +905,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 32],
@@ -923,7 +923,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 64],
@@ -941,7 +941,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 8,
                 "cycle": [
                     [0, 96],
@@ -959,7 +959,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 128],
@@ -973,7 +973,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 160],
@@ -987,7 +987,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 192],
@@ -1001,7 +1001,7 @@
                 "size": [32, 32],
                 "shadow_offset": [0, 0],
                 "still_frame": 0,
-                "cycle_time_in_ms": 200,
+                "cycle_time_in_ms": 300,
                 "cycle_len": 4,
                 "cycle": [
                     [0, 224],

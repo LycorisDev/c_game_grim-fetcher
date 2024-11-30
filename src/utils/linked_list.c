@@ -2,14 +2,14 @@
 
 static int list_is_sorted(t_list *list, int (*f)(void *, void *));
 
-t_list *list_new(void *content)
+t_list *list_new(void *data)
 {
     t_list *new;
 
     new = malloc(sizeof(t_list));
     if (!new)
         return 0;
-    new->content = content;
+    new->data = data;
     new->next = 0;
     return new;
 }
@@ -34,7 +34,7 @@ int    list_add_sorted(t_list **list, t_list *new, int (*f)(void *, void *))
     prev = 0;
     while (curr)
     {
-        if (f(curr->content, new->content) <= 0)
+        if (f(curr->data, new->data) <= 0)
             prev = curr;
         else
         {
@@ -59,7 +59,7 @@ void list_pop(t_list **list, void (*del)(void *))
     first = *list;
     next = first->next;
     if (del)
-        del(first->content);
+        del(first->data);
     free(first);
     *list = next;
     return;
@@ -75,7 +75,7 @@ void list_clear(t_list **list, void (*del)(void *))
     {
         next = (*list)->next;
         if (del)
-            del((*list)->content);
+            del((*list)->data);
         free(*list);
         *list = next;
     }
@@ -102,7 +102,7 @@ static int list_is_sorted(t_list *list, int (*f)(void *, void *))
         return 0;
     while (list->next)
     {
-        if (f(list->content, list->next->content) > 0)
+        if (f(list->data, list->next->data) > 0)
             return 0;
         list = list->next;
     }

@@ -6,23 +6,23 @@ static void   neighbors(t_map *map, t_list **list, t_cell *curr, t_cell *end);
 static int    cmp_global_goal(void *a, void *b);
 
 /* AStar Pathfinding Algorithm */
-t_list *get_path(t_win *win, t_cell *start, t_cell *end)
+t_list *get_path(t_cell *start, t_cell *end)
 {
     t_cell *curr;
     t_list *list;
 
-    reset_astar_data(&win->map, start, end);
+    reset_astar_data(&man.map, start, end);
     curr = start;
     list = list_new(start);
     while (list && curr != end)
     {
-        while (list && ((t_cell *)(list->content))->is_visited)
+        while (list && ((t_cell *)(list->data))->is_visited)
             list_pop(&list, 0);
         if (!list)
             break;
-        curr = list->content;
+        curr = list->data;
         curr->is_visited = 1;
-        neighbors(&win->map, &list, curr, end);
+        neighbors(&man.map, &list, curr, end);
     }
     list_clear(&list, 0);
     if (!end->parent)

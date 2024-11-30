@@ -1,28 +1,28 @@
 #include "grim_fetcher.h"
 
-static void set_map_size_and_name(t_win *win, char **ber, char *path);
-static int  create_map_array(t_win *win, char **ber);
+static void set_map_size_and_name(char **ber, char *path);
+static int  create_map_array(char **ber);
 static void set_is_obstacle(t_cell *cell);
-static void set_player(t_win *win);
+static void set_player(void);
 static void set_neighbors(t_ivec2 map_size, t_cell *map_cells);
 
-int set_map_and_player(t_win *win, int argc, char *path)
+int set_map_and_player(int argc, char *path)
 {
     char **ber;
 
     ber = get_ber_data(argc, path);
     if (!ber)
         return 0;
-    set_map_size_and_name(win, ber, path);
-    if (!create_map_array(win, ber))
+    set_map_size_and_name(ber, path);
+    if (!create_map_array(ber))
     {
         free_ber_data(ber);
         return 0;
     }
     free_ber_data(ber);
-    set_player(win);
-    set_neighbors(win->map.size, win->map.cells);
-    if (!are_collectibles_and_exit_accessible(win))
+    set_player();
+    set_neighbors(man.map.size, man.map.cells);
+    if (!are_collectibles_and_exit_accessible())
     {
         dprintf(2, "Error: The exit or a collectible cannot be reached\n");
         return 0;
@@ -30,7 +30,7 @@ int set_map_and_player(t_win *win, int argc, char *path)
     return 1;
 }
 
-static void set_map_size_and_name(t_win *win, char **ber, char *path)
+static void set_map_size_and_name(char **ber, char *path)
 {
     t_ivec2 size;
 
@@ -41,43 +41,43 @@ static void set_map_size_and_name(t_win *win, char **ber, char *path)
             ++size.x;
         ++size.y;
     }
-    set_ivec2(&win->map.size, size.x, size.y);
+    set_ivec2(&man.map.size, size.x, size.y);
     if (!strrchr(path, '/'))
-        win->map.name = strdup(path);
+        man.map.name = strdup(path);
     else
-        win->map.name = strdup(strrchr(path, '/') + 1);
-    if (win->map.name)
+        man.map.name = strdup(strrchr(path, '/') + 1);
+    if (man.map.name)
     {
-        win->map.name[strlen(win->map.name) - 4] = 0;
-        if (!win->map.name[0])
+        man.map.name[strlen(man.map.name) - 4] = 0;
+        if (!man.map.name[0])
         {
-            free(win->map.name);
-            win->map.name = 0;
+            free(man.map.name);
+            man.map.name = 0;
         }
     }
     return;
 }
 
-static int create_map_array(t_win *win, char **ber)
+static int create_map_array(char **ber)
 {
     t_ivec2 pos;
     t_cell  *c;
     size_t  len;
 
-    len = (win->map.size.x * win->map.size.y + 1) * sizeof(t_cell);
-    win->map.cells = malloc(len);
-    if (!win->map.cells)
+    len = (man.map.size.x * man.map.size.y + 1) * sizeof(t_cell);
+    man.map.cells = malloc(len);
+    if (!man.map.cells)
         return 0;
-    bzero(win->map.cells, len);
+    bzero(man.map.cells, len);
     pos.y = 0;
-    while (pos.y < win->map.size.y)
+    while (pos.y < man.map.size.y)
     {
         pos.x = 0;
-        while (pos.x < win->map.size.x)
+        while (pos.x < man.map.size.x)
         {
-            c = &win->map.cells[pos.y * win->map.size.x + pos.x];
+            c = &man.map.cells[pos.y * man.map.size.x + pos.x];
             c->symbol = ber[pos.y][pos.x];
-            c->spr = get_spr_by_symbol(win, c->symbol);
+            c->spr = get_spr_by_symbol(c->symbol);
             set_ivec2(&c->pos, pos.x, pos.y);
             set_is_obstacle(c);
             ++pos.x;
@@ -96,26 +96,26 @@ static void set_is_obstacle(t_cell *cell)
     return;
 }
 
-static void set_player(t_win *win)
+static void set_player(void)
 {
     int x;
     int y;
 
-    bzero(&win->p, sizeof(t_player));
-    win->p.health = 100;
-    win->p.stamina = 100;
-    if (!win->map.cells)
+    bzero(&man.player, sizeof(t_player));
+    man.player.health = 100;
+    man.player.stamina = 100;
+    if (!man.map.cells)
         return;
     y = 0;
-    while (y < win->map.size.y)
+    while (y < man.map.size.y)
     {
         x = 0;
-        while (x < win->map.size.x)
+        while (x < man.map.size.x)
         {
-            if (win->map.cells[y * win->map.size.x + x].symbol == 'P')
-                set_ivec2(&win->p.pos, x, y);
-            else if (win->map.cells[y * win->map.size.x + x].symbol == 'C')
-                ++win->p.to_collect;
+            if (man.map.cells[y * man.map.size.x + x].symbol == 'P')
+                set_ivec2(&man.player.pos, x, y);
+            else if (man.map.cells[y * man.map.size.x + x].symbol == 'C')
+                ++man.player.to_collect;
             ++x;
         }
         ++y;

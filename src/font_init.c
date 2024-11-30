@@ -51,8 +51,8 @@ static void set_text_to_white(t_spr *s, int cycle_index)
     len = s->size.x * s->size.y;
     while (i < len)
     {
-        if (get_alpha(s->cycle[cycle_index][i]))
-            s->cycle[cycle_index][i] = 0xFFFFFFFF;
+        if (s->cycle[cycle_index][i].a)
+            s->cycle[cycle_index][i] = get_color_rgba(255, 255, 255, 255);
         ++i;
     }
     return;
@@ -64,12 +64,16 @@ static void add_outline(t_spr *s, int cycle_index, t_ivec2 *offsets)
     int     j;
     int     len;
     t_ivec2 p;
+    t_color color_white;
+    t_color color_black;
 
+    color_white = get_color_rgba(255, 255, 255, 255);
+    color_black = get_color_rgba(0, 0, 0, 255);
     i = 0;
     len = s->size.x * s->size.y;
     while (i < len)
     {
-        if (s->cycle[cycle_index][i] == 0xFFFFFFFF)
+        if (cmp_color(s->cycle[cycle_index][i], color_white))
         {
             j = 0;
             while (j < 8)
@@ -77,8 +81,8 @@ static void add_outline(t_spr *s, int cycle_index, t_ivec2 *offsets)
                 p.y = i / s->size.x;
                 p.x = i - p.y * s->size.x;
                 set_ivec2(&p, p.x + offsets[j].x, p.y + offsets[j].y);
-                if (s->cycle[cycle_index][p.y * s->size.x + p.x] != 0xFFFFFFFF)
-                    s->cycle[cycle_index][p.y * s->size.x + p.x] = 0xFF000000;
+                if (!cmp_color(s->cycle[cycle_index][p.y * s->size.x + p.x], color_white))
+                    s->cycle[cycle_index][p.y * s->size.x + p.x] = color_black;
                 ++j;
             }
         }

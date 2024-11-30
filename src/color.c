@@ -1,94 +1,59 @@
 #include "grim_fetcher.h"
 
-static t_ubyte get_ubyte(char c);
+static int hex_char_to_int(char c);
 
-t_uint get_color(t_ubyte alpha, t_ubyte red, t_ubyte green, t_ubyte blue)
+t_color get_color_rgba(GLubyte r, GLubyte g, GLubyte b, GLubyte a)
 {
-    return alpha << 24 | red << 16 | green << 8 | blue;
+    t_color c;
+
+    c.r = r;
+    c.g = g;
+    c.b = b;
+    c.a = a;
+    return c;
 }
 
-/* e.g.: "#097e7b" - "097e7b" */
-t_uint get_color_from_hex(char *str)
+t_color get_color_hex(char *str, GLubyte alpha)
 {
     int     i;
-    t_uint  color;
-    t_ubyte values[3];
+    t_color c;
 
     i = str[0] == '#';
-    color = 0;
-    values[0] = get_ubyte(str[i + 0]) * 16 + get_ubyte(str[i + 1]);
-    values[1] = get_ubyte(str[i + 2]) * 16 + get_ubyte(str[i + 3]);
-    values[2] = get_ubyte(str[i + 4]) * 16 + get_ubyte(str[i + 5]);
-    set_alpha(&color, 255);
-    set_red(&color, values[0]);
-    set_green(&color, values[1]);
-    set_blue(&color, values[2]);
-    return color;
+    c.r = hex_char_to_int(str[i + 0]) * 16 + hex_char_to_int(str[i + 1]);
+    c.g = hex_char_to_int(str[i + 2]) * 16 + hex_char_to_int(str[i + 3]);
+    c.b = hex_char_to_int(str[i + 4]) * 16 + hex_char_to_int(str[i + 5]);
+    c.a = alpha;
+    return c;
 }
 
-t_uint get_alpha_blended_color(t_ubyte prev[4], t_ubyte curr[4])
+t_color get_alpha_blended_color(t_color prev, t_color new)
 {
-    t_ubyte blend[4];
+    t_color blend;
 
-    blend[0] = curr[0] + (255 - curr[0]) * prev[0] / 255;
-    if (!blend[0])
-        return 0;
-    blend[1] = (curr[0] * curr[1] + (255 - curr[0]) * prev[0] * prev[1] / 255)
-        / blend[0];
-    blend[2] = (curr[0] * curr[2] + (255 - curr[0]) * prev[0] * prev[2] / 255)
-        / blend[0];
-    blend[3] = (curr[0] * curr[3] + (255 - curr[0]) * prev[0] * prev[3] / 255)
-        / blend[0];
-    return get_color(blend[0], blend[1], blend[2], blend[3]);
+    blend.a = new.a + (255 - new.a) * prev.a / 255;
+    if (!blend.a)
+        return get_color_rgba(0, 0, 0, 0);
+    blend.r = (new.a * new.r + (255 - new.a) * prev.a * prev.r / 255) / blend.a;
+    blend.g = (new.a * new.g + (255 - new.a) * prev.a * prev.g / 255) / blend.a;
+    blend.b = (new.a * new.b + (255 - new.a) * prev.a * prev.b / 255) / blend.a;
+    return blend;
 }
 
-t_ubyte get_alpha(t_uint color)
+t_color get_frame_color(t_frame *f, int x, int y)
 {
-    return (color >> 24) & 0xFF;
+    x *= f->thickness;
+    y *= f->thickness;
+    return ((t_color *)f->buf)[y * f->real_size.x + x];
 }
 
-void set_alpha(t_uint *color, t_ubyte value)
+int cmp_color(t_color a, t_color b)
 {
-    *color = (*color & 0x00FFFFFF) | (value << 24);
-    return;
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
-t_ubyte get_red(t_uint color)
+static int hex_char_to_int(char c)
 {
-    return (color >> 16) & 0xFF;
-}
-
-void set_red(t_uint *color, t_ubyte value)
-{
-    *color = (*color & 0xFF00FFFF) | (value << 16);
-    return;
-}
-
-t_ubyte get_green(t_uint color)
-{
-    return (color >> 8) & 0xFF;
-}
-
-void set_green(t_uint *color, t_ubyte value)
-{
-    *color = (*color & 0xFFFF00FF) | (value << 8);
-    return;
-}
-
-t_ubyte get_blue(t_uint color)
-{
-    return color & 0xFF;
-}
-
-void set_blue(t_uint *color, t_ubyte value)
-{
-    *color = (*color & 0xFFFFFF00) | value;
-    return;
-}
-
-static t_ubyte get_ubyte(char c)
-{
-    if (c >= '0' && c <= '9')
+    if (isdigit(c))
         return c - '0';
     else if (c >= 'a' && c <= 'f')
         return 10 + (c - 'a');
