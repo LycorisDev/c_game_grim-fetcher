@@ -1,81 +1,81 @@
 #include "grim_fetcher.h"
 
-static int are_symbols_valid(char **ber);
-static int are_symbols_in_right_amount(char **ber);
-static int is_map_rectangular_and_closed_off(char **ber);
-static int is_map_closed_off_by_walls(char **ber);
+static int are_symbols_valid(char **map);
+static int are_symbols_in_right_amount(char **map);
+static int is_map_rectangular_and_closed_off(char **map);
+static int is_map_closed_off_by_walls(char **map);
 
-char **get_ber_data(int argc, char *path)
+char **get_map_data(int argc, char *path)
 {
     int  fd;
-    char **ber;
+    char **map;
 
-    fd = get_ber_fd(argc, path);
+    fd = get_map_fd(argc, path);
     if (fd < 0)
         return 0;
-    ber = copy_ber(&fd, path);
+    map = copy_map(&fd, path);
     close(fd);
-    if (!are_symbols_valid(ber) || !is_map_rectangular_and_closed_off(ber))
+    if (!are_symbols_valid(map) || !is_map_rectangular_and_closed_off(map))
     {
-        free_ber_data(ber);
+        free_map_data(map);
         return 0;
     }
-    return ber;
+    return map;
 }
 
-void free_ber_data(char **ber)
+void free_map_data(char **map)
 {
     char **ptr;
 
-    ptr = ber;
-    while (*ber)
+    ptr = map;
+    while (*map)
     {
-        free(*ber);
-        ++ber;
+        free(*map);
+        ++map;
     }
     free(ptr);
     return;
 }
 
-static int are_symbols_valid(char **ber)
+static int are_symbols_valid(char **map)
 {
     size_t i;
     size_t j;
 
-    if (!ber)
+    if (!map)
         return 0;
     i = 0;
-    while (ber[i])
+    while (map[i])
     {
         j = 0;
-        while (ber[i][j])
+        while (map[i][j])
         {
-            if (!strchr("01BCEGP", ber[i][j]))
+            if (!strchr("01BCEGP", map[i][j]))
             {
                 dprintf(2, "Error: Unknown symbol '%c' (-> \"%s\")\n",
-                    ber[i][j], "01BCEGP");
+                    map[i][j], "01BCEGP");
                 return 0;
             }
             ++j;
         }
         ++i;
     }
-    return are_symbols_in_right_amount(ber);
+    return are_symbols_in_right_amount(map);
 }
 
-static int are_symbols_in_right_amount(char **ber)
+static int are_symbols_in_right_amount(char **map)
 {
     int amount[3];
 
     amount[0] = 0;
     amount[1] = 0;
     amount[2] = 0;
-    while (*ber)
+    while (*map)
     {
-        amount[0] += strchr(*ber, 'C') != 0;
-        amount[1] += strchr(*ber, 'E') != 0;
-        amount[2] += strchr(*ber, 'P') != 0;
-        ++ber;
+        amount[0] += strchr(*map, 'C') != 0;
+        amount[1] += strchr(*map, 'E') != 0;
+        amount[2] += strchr(*map, 'P') != 0;
+        ++map;
     }
     if (amount[0] >= 1 && amount[1] == 1 && amount[2] == 1)
         return 1;
@@ -92,7 +92,7 @@ static int are_symbols_in_right_amount(char **ber)
     return 0;
 }
 
-static int is_map_rectangular_and_closed_off(char **ber)
+static int is_map_rectangular_and_closed_off(char **map)
 {
     size_t i;
     size_t len;
@@ -100,9 +100,9 @@ static int is_map_rectangular_and_closed_off(char **ber)
 
     i = 0;
     len = 0;
-    while (ber[i])
+    while (map[i])
     {
-        curr_len = strlen(ber[i]);
+        curr_len = strlen(map[i]);
         if (!len)
             len = curr_len;
         else if (curr_len && len != curr_len)
@@ -112,7 +112,7 @@ static int is_map_rectangular_and_closed_off(char **ber)
         }
         ++i;
     }
-    if (!is_map_closed_off_by_walls(ber))
+    if (!is_map_closed_off_by_walls(map))
     {
         dprintf(2, "Error: Map is not closed_off_by_walls\n");
         return 0;
@@ -120,24 +120,24 @@ static int is_map_rectangular_and_closed_off(char **ber)
     return 1;
 }
 
-static int is_map_closed_off_by_walls(char **ber)
+static int is_map_closed_off_by_walls(char **map)
 {
     size_t i;
     size_t j;
     size_t width;
 
     i = 0;
-    width = ber[0] ? strlen(ber[0]) : 0;
-    while (ber[i])
+    width = map[0] ? strlen(map[0]) : 0;
+    while (map[i])
     {
-        if (ber[i][0] != '1' || ber[i][width - 1] != '1')
+        if (map[i][0] != '1' || map[i][width - 1] != '1')
             return 0;
-        if (i == 0 || !ber[i + 1])
+        if (i == 0 || !map[i + 1])
         {
             j = 0;
             while (j < width)
             {
-                if (ber[i][j] != '1')
+                if (map[i][j] != '1')
                     return 0;
                 ++j;
             }

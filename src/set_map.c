@@ -1,25 +1,25 @@
 #include "grim_fetcher.h"
 
-static void set_map_size_and_name(char **ber, char *path);
-static int  create_map_array(char **ber);
+static void set_map_size_and_name(char **map, char *path);
+static int  create_map_array(char **map);
 static void set_is_obstacle(t_cell *cell);
 static void set_player(void);
 static void set_neighbors(t_ivec2 map_size, t_cell *map_cells);
 
 int set_map_and_player(int argc, char *path)
 {
-    char **ber;
+    char **map;
 
-    ber = get_ber_data(argc, path);
-    if (!ber)
+    map = get_map_data(argc, path);
+    if (!map)
         return 0;
-    set_map_size_and_name(ber, path);
-    if (!create_map_array(ber))
+    set_map_size_and_name(map, path);
+    if (!create_map_array(map))
     {
-        free_ber_data(ber);
+        free_map_data(map);
         return 0;
     }
-    free_ber_data(ber);
+    free_map_data(map);
     set_player();
     set_neighbors(man.map.size, man.map.cells);
     if (!are_collectibles_and_exit_accessible())
@@ -30,14 +30,14 @@ int set_map_and_player(int argc, char *path)
     return 1;
 }
 
-static void set_map_size_and_name(char **ber, char *path)
+static void set_map_size_and_name(char **map, char *path)
 {
     t_ivec2 size;
 
     set_ivec2(&size, 0, 0);
-    while (ber[size.y])
+    while (map[size.y])
     {
-        while (ber[size.y][size.x])
+        while (map[size.y][size.x])
             ++size.x;
         ++size.y;
     }
@@ -58,7 +58,7 @@ static void set_map_size_and_name(char **ber, char *path)
     return;
 }
 
-static int create_map_array(char **ber)
+static int create_map_array(char **map)
 {
     t_ivec2 pos;
     t_cell  *c;
@@ -76,7 +76,7 @@ static int create_map_array(char **ber)
         while (pos.x < man.map.size.x)
         {
             c = &man.map.cells[pos.y * man.map.size.x + pos.x];
-            c->symbol = ber[pos.y][pos.x];
+            c->symbol = map[pos.y][pos.x];
             c->spr = get_spr_by_symbol(c->symbol);
             set_ivec2(&c->pos, pos.x, pos.y);
             set_is_obstacle(c);

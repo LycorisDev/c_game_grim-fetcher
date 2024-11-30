@@ -1,10 +1,10 @@
 #include "grim_fetcher.h"
 
-static int    get_ber_height(int *fd, char *path);
+static int    get_map_height(int *fd, char *path);
 static size_t strlen_without_whitespaces(char *s);
 static char   *strdup_without_whitespaces(char *s);
 
-int get_ber_fd(int argc, char *path)
+int get_map_fd(int argc, char *path)
 {
     int    fd;
     size_t len;
@@ -13,13 +13,13 @@ int get_ber_fd(int argc, char *path)
         fd = open(path, O_RDONLY);
     len = path ? strlen(path) : 0;
     if (argc == 1)
-        dprintf(2, "Error: No argument specified -> *.ber file needed\n");
+        dprintf(2, "Error: No argument specified -> *.map file needed\n");
     else if (argc > 2)
         dprintf(2, "Error: Too many arguments specified\n");
     else if (fd < 0)
         perror("Error");
-    else if (len < 4 || strcmp(&path[len - 4], ".ber"))
-        dprintf(2, "Error: File doesn't have *.ber extension\n");
+    else if (len < 4 || strcmp(&path[len - 4], ".map"))
+        dprintf(2, "Error: File doesn't have *.map extension\n");
     else
         return fd;
     if (path)
@@ -27,35 +27,35 @@ int get_ber_fd(int argc, char *path)
     return -1;
 }
 
-char **copy_ber(int *fd, char *path)
+char **copy_map(int *fd, char *path)
 {
     char   *s;
-    char   **ber;
+    char   **map;
     size_t i;
     size_t height;
 
     i = 0;
-    height = get_ber_height(fd, path);
+    height = get_map_height(fd, path);
     if (*fd < 0)
         return 0;
-    ber = malloc((height + 1) * sizeof(char *));
-    if (!ber)
+    map = malloc((height + 1) * sizeof(char *));
+    if (!map)
         return 0;
-    bzero(ber, (height + 1) * sizeof(char *));
+    bzero(map, (height + 1) * sizeof(char *));
     s = gnl(*fd);
     while (s)
     {
-        ber[i] = strdup_without_whitespaces(s);
-        if (ber[i])
+        map[i] = strdup_without_whitespaces(s);
+        if (map[i])
             i++;
         free(s);
         s = gnl(*fd);
     }
-    ber[i] = 0;
-    return ber;
+    map[i] = 0;
+    return map;
 }
 
-static int get_ber_height(int *fd, char *path)
+static int get_map_height(int *fd, char *path)
 {
     char *s;
     int  height;
