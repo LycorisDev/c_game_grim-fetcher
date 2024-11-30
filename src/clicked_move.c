@@ -7,7 +7,7 @@ void move_along_clicked_path(long dt)
     static long elapsed_time;
     t_ivec2     move;
 
-    if (!man.clicked_path)
+    if (!man.clicked_path && man.click)
         man.clicked_path = get_clicked_path();
     if (!man.clicked_path)
     {
@@ -55,8 +55,6 @@ static t_list *get_clicked_path(void)
     t_cell  *cell;
     t_ivec2 origin;
 
-    if (!man.click)
-        return 0;
     player_cell = find_cell_by_symbol(man.map.cells, 'P');
     origin.x = (13 / man.zoom - player_cell->pos.x) * 24;
     origin.y = (7 / man.zoom - player_cell->pos.y) * 24;

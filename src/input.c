@@ -45,7 +45,10 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mods)
     {
         set_ivec2(&man.click_pos, man.cursor.x, man.cursor.y);
         if (action == GLFW_PRESS)
+        {
+            list_clear(&man.clicked_path, 0);
             man.click = 1;
+        }
         else if (action == GLFW_RELEASE)
             man.click = 0;
     }
