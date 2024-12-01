@@ -34,6 +34,8 @@ void move_slimes(long dt)
         move_slime(slime, move);
         return;
     }
+    if (!man.player.steps)
+        return;
     slime = get_slime(&i);
     if (!slime)
         return;
