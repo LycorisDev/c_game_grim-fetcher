@@ -47,6 +47,7 @@ int reload_game(void)
 static int init(void)
 {
     bzero(&man, sizeof(t_man));
+    man.zoom = 5;
     set_map_filenames();
     if (!man.map_filenames)
         return 0;
@@ -76,7 +77,6 @@ static int game_init(char *map_path)
     man.clicked_path = 0;
     set_ivec2(&man.cursor, -1, -1);
     set_ivec2(&man.click_pos, -1, -1);
-    man.zoom = 5;
     man.state = ONGOING;
     if (!set_map_and_player(map_path))
         return 0;

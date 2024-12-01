@@ -3,7 +3,7 @@
 static void    render_map(t_frame *frame, long dt);
 static void    set_ivec2_vals(t_ivec2 *cs, t_ivec2 *op, t_ivec2 *p);
 static t_ivec2 get_elem_pos(t_ivec2 i, t_ivec2 pos);
-static void    draw_ground(t_frame *frame, t_ivec2 pos);
+static void    draw_ground(t_frame *frame, t_ivec2 pos, int is_slime_neighbor);
 
 void render(void)
 {
@@ -85,7 +85,7 @@ static void render_map(t_frame *frame, long dt)
         while (++i.x < man.map.size.x)
         {
             if (man.map.cells[i.y * man.map.size.x + i.x].symbol != '1')
-                draw_ground(frame, pos);
+                draw_ground(frame, pos, is_cell_a_slime_neighbor(i));
             if (man.map.cells[i.y * man.map.size.x + i.x].spr)
                 draw_sprite(frame,
                     man.map.cells[i.y * man.map.size.x + i.x].spr,
@@ -99,26 +99,29 @@ static void render_map(t_frame *frame, long dt)
     return;
 }
 
-static void draw_ground(t_frame *frame, t_ivec2 pos)
+static void draw_ground(t_frame *frame, t_ivec2 pos, int is_slime_neighbor)
 {
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x + man.sprites[9].size.x, pos.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x + man.sprites[9].size.x, pos.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x - man.sprites[9].size.x * 2,
-        pos.y + man.sprites[9].size.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x + man.sprites[9].size.x, pos.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x + man.sprites[9].size.x, pos.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x - man.sprites[9].size.x * 2,
-        pos.y + man.sprites[9].size.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x + man.sprites[9].size.x, pos.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
-    set_ivec2(&pos, pos.x + man.sprites[9].size.x, pos.y);
-    draw_sprite(frame, &man.sprites[9], pos, 0);
+    int index;
+
+    index = is_slime_neighbor ? 63 : 9;
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x + man.sprites[index].size.x, pos.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x + man.sprites[index].size.x, pos.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x - man.sprites[index].size.x * 2,
+        pos.y + man.sprites[index].size.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x + man.sprites[index].size.x, pos.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x + man.sprites[index].size.x, pos.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x - man.sprites[index].size.x * 2,
+        pos.y + man.sprites[index].size.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x + man.sprites[index].size.x, pos.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
+    set_ivec2(&pos, pos.x + man.sprites[index].size.x, pos.y);
+    draw_sprite(frame, &man.sprites[index], pos, 0);
     return;
 }

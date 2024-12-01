@@ -15,7 +15,7 @@
 
 #define RES_WIDTH  640
 #define RES_HEIGHT 360
-#define SPRITE_LEN 63
+#define SPRITE_LEN 64
 
 typedef unsigned char t_ubyte;
 typedef unsigned int t_uint;
@@ -204,6 +204,8 @@ void       free_image(t_png* img);
 int        create_background(void);
 int        set_img_file_obj(t_img *file, int fd);
 int        create_sprites_from_file(t_img *file, int *i_spr);
+void       add_red_version_of_ground(void);
+int        is_cell_a_slime_neighbor(t_ivec2 i);
 void       free_sprites(void);
 int        create_mesh(void);
 void       render_mesh(void);

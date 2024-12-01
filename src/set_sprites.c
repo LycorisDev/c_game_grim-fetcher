@@ -31,6 +31,7 @@ int set_sprite_array(char *path)
     }
     close(fd);
     gnl(-1);
+    add_red_version_of_ground();
     return is_success;
 }
 
