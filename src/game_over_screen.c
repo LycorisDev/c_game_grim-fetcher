@@ -62,7 +62,23 @@ static void render_reload_msg(t_frame *frame)
     t_ivec2 pos;
 
     set_ivec2(&pos, RES_WIDTH / 2, RES_HEIGHT / 2 + 24);
-    pos.x -= strlen("Press Enter to reload...") / 2 * 8;
-    draw_font_default(frame, &pos, "Press Enter to reload...");
+    if (man.state == VICTORY)
+    {
+        if (!man.map_filenames[man.map_index + 1])
+        {
+            pos.x -= strlen("Game complete!") / 2 * 8;
+            draw_font_default(frame, &pos, "Game complete!");
+        }
+        else
+        {
+            pos.x -= strlen("Press Enter to continue...") / 2 * 8;
+            draw_font_default(frame, &pos, "Press Enter to continue...");
+        }
+    }
+    else
+    {
+        pos.x -= strlen("Press Enter to retry...") / 2 * 8;
+        draw_font_default(frame, &pos, "Press Enter to retry...");
+    }
     return;
 }

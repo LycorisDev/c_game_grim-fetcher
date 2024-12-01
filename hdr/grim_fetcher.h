@@ -8,6 +8,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <ctype.h>
+#include <dirent.h>
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include "gl_functions.h"
@@ -105,7 +106,6 @@ struct s_cell
 
 typedef struct s_map
 {
-    char    *name;
     t_ivec2 size;
     t_cell  *cells;
 } t_map;
@@ -162,6 +162,8 @@ typedef struct s_res
 #define NBR_FRAMES 3
 typedef struct s_man
 {
+    int        map_index;
+    char       **map_filenames;
     GLFWwindow *window;
     GLuint     shader_program;
     double     delta_time;
@@ -186,6 +188,8 @@ extern t_man man;
 
 int        reload_game(void);
 int        set_sprite_array(char *path);
+void       set_map_filenames(void);
+void       free_map_filenames(void);
 int        set_map_and_player(char *path);
 void       add_outline_to_font(t_spr *font);
 char       *read_file(char* filepath);

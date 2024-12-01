@@ -13,7 +13,6 @@ int set_map_and_player(char *path)
     map = get_map_data(path);
     if (!map)
         return 0;
-    man.map.name = strdup(path);
     set_map_size(map);
     if (!create_map_array(map))
     {

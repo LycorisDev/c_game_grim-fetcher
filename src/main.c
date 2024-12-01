@@ -1,6 +1,6 @@
 #include "grim_fetcher.h"
 
-static int  init(char *title, char *map_path);
+static int  init(void);
 static int  game_init(char *map_path);
 static void update_time_variables(void);
 static void deinit(void);
@@ -8,10 +8,9 @@ static void game_deinit(void);
 
 t_man man;
 
-int main(int argc, char **argv)
+int main(void)
 {
-    (void)argc;
-    if (!init("Grim Fetcher", argv[1]))
+    if (!init())
     {
         dprintf(2, "Error: Failure during initialization\n");
         deinit();
@@ -35,24 +34,27 @@ int main(int argc, char **argv)
 
 int reload_game(void)
 {
-    char *map_path;
-    int  success;
-
-    map_path = strdup(man.map.name);
     game_deinit();
-    success = game_init(map_path);
-    free(map_path);
-    return success;
+    if (man.state == VICTORY)
+    {
+        if (!man.map_filenames[man.map_index + 1])
+            return 0;
+        return game_init(man.map_filenames[++man.map_index]);
+    }
+    return game_init(man.map_filenames[man.map_index]);
 }
 
-static int init(char *title, char *map_path)
+static int init(void)
 {
     bzero(&man, sizeof(t_man));
-    if (!game_init(map_path))
+    set_map_filenames();
+    if (!man.map_filenames)
+        return 0;
+    if (!game_init(man.map_filenames[man.map_index]))
         return 0;
     if (!set_sprite_array("textures/index.json"))
         return 0;
-    man.window = get_window(title);
+    man.window = get_window("Grim Fetcher");
     man.shader_program = create_shader_program();
     if (!man.window || !man.shader_program || !create_uniform()
         || !create_mesh() || !create_frames())
@@ -101,14 +103,16 @@ static void deinit(void)
     free_mesh();
     free_frames();
     free_sprites();
+    free_map_filenames();
     game_deinit();
     return;
 }
 
 static void game_deinit(void)
 {
-    free(man.map.name);
     free(man.map.cells);
+    man.map.cells = 0;
     list_clear(&man.clicked_path, 0);
+    man.clicked_path = 0;
     return;
 }
