@@ -1,19 +1,20 @@
 #include "grim_fetcher.h"
 
-static void set_map_size_and_name(char **map, char *path);
+static void set_map_size(char **map);
 static int  create_map_array(char **map);
 static void set_is_obstacle(t_cell *cell);
 static void set_player(void);
 static void set_neighbors(t_ivec2 map_size, t_cell *map_cells);
 
-int set_map_and_player(int argc, char *path)
+int set_map_and_player(char *path)
 {
     char **map;
 
-    map = get_map_data(argc, path);
+    map = get_map_data(path);
     if (!map)
         return 0;
-    set_map_size_and_name(map, path);
+    man.map.name = strdup(path);
+    set_map_size(map);
     if (!create_map_array(map))
     {
         free_map_data(map);
@@ -30,7 +31,7 @@ int set_map_and_player(int argc, char *path)
     return 1;
 }
 
-static void set_map_size_and_name(char **map, char *path)
+static void set_map_size(char **map)
 {
     t_ivec2 size;
 
@@ -42,19 +43,6 @@ static void set_map_size_and_name(char **map, char *path)
         ++size.y;
     }
     set_ivec2(&man.map.size, size.x, size.y);
-    if (!strrchr(path, '/'))
-        man.map.name = strdup(path);
-    else
-        man.map.name = strdup(strrchr(path, '/') + 1);
-    if (man.map.name)
-    {
-        man.map.name[strlen(man.map.name) - 4] = 0;
-        if (!man.map.name[0])
-        {
-            free(man.map.name);
-            man.map.name = 0;
-        }
-    }
     return;
 }
 

@@ -122,7 +122,7 @@ static void move_slime(t_cell *cell, t_ivec2 move)
     set_ivec2(&target, cell->pos.x + move.x, cell->pos.y + move.y);
     symbol = man.map.cells[target.y * man.map.size.x + target.x].symbol;
     if (symbol == 'P')
-        man.game_over = -1;
+        man.state = FAILURE;
     else if (symbol == '0')
         move_symbol(&man.map, cell->pos, target);
     return;

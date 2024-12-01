@@ -5,12 +5,12 @@ static int are_symbols_in_right_amount(char **map);
 static int is_map_rectangular_and_closed_off(char **map);
 static int is_map_closed_off_by_walls(char **map);
 
-char **get_map_data(int argc, char *path)
+char **get_map_data(char *path)
 {
     int  fd;
     char **map;
 
-    fd = get_map_fd(argc, path);
+    fd = get_map_fd(path);
     if (fd < 0)
         return 0;
     map = copy_map(&fd, path);

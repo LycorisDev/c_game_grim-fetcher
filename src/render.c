@@ -1,22 +1,18 @@
 #include "grim_fetcher.h"
 
-static void    game_over_screen(int victory);
 static void    render_map(t_frame *frame, long dt);
 static void    set_ivec2_vals(t_ivec2 *cs, t_ivec2 *op, t_ivec2 *p);
 static t_ivec2 get_elem_pos(t_ivec2 i, t_ivec2 pos);
 static void    draw_ground(t_frame *frame, t_ivec2 pos);
 
-int render(void)
+void render(void)
 {
     long    dt;
     t_frame *frame;
     t_frame *tmp;
 
-    if (man.game_over)
-    {
-        game_over_screen(man.game_over == 1);
-        return 0;
-    }
+    if (game_over_screen())
+        return;
     dt = get_delta_time();
     move_slimes(dt);
     move_along_clicked_path(dt);
@@ -28,7 +24,7 @@ int render(void)
     render_map(tmp, dt);
     copy_frame(frame, tmp, man.zoom);
     render_gui(frame, dt);
-    return 0;
+    return;
 }
 
 t_spr *get_spr_by_symbol(char symbol)
@@ -46,30 +42,6 @@ t_spr *get_spr_by_symbol(char symbol)
     else if (symbol == 'G')
         return &man.sprites[49];
     return 0;
-}
-
-static void game_over_screen(int victory)
-{
-    long    dt;
-    t_ivec2 pos;
-    t_frame *frame;
-
-    dt = get_delta_time();
-    frame = man.frame[man.curr_frame];
-    render_background(frame);
-    render_gui(frame, dt);
-    set_ivec2(&pos, RES_WIDTH / 2, RES_HEIGHT / 2);
-    if (victory)
-    {
-        pos.x -= strlen("You won! :D") / 2 * 8;
-        draw_font_default(frame, &pos, "You won! :D");
-    }
-    else
-    {
-        pos.x -= strlen("You got killed by a slime :(") / 2 * 7;
-        draw_font_default(frame, &pos, "You got killed by a slime :(");
-    }
-    return;
 }
 
 static void set_ivec2_vals(t_ivec2 *cs, t_ivec2 *op, t_ivec2 *p)

@@ -10,7 +10,7 @@ void move_player(int x, int y)
     t_ivec2 target;
     char    symbol;
 
-    if (man.game_over)
+    if (man.state != ONGOING)
         return;
     orient_player(find_cell_by_symbol(man.map.cells, 'P'), x, y);
     set_ivec2(&target, man.player.pos.x + x, man.player.pos.y + y);
@@ -18,7 +18,7 @@ void move_player(int x, int y)
     if (symbol == 'e')
     {
         ++man.player.steps;
-        man.game_over = 1;
+        man.state = VICTORY;
     }
     else if (symbol == '0' || symbol == 'C')
     {

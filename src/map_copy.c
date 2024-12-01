@@ -4,7 +4,7 @@ static int    get_map_height(int *fd, char *path);
 static size_t strlen_without_whitespaces(char *s);
 static char   *strdup_without_whitespaces(char *s);
 
-int get_map_fd(int argc, char *path)
+int get_map_fd(char *path)
 {
     int    fd;
     size_t len;
@@ -12,10 +12,8 @@ int get_map_fd(int argc, char *path)
     if (path)
         fd = open(path, O_RDONLY);
     len = path ? strlen(path) : 0;
-    if (argc == 1)
+    if (!path)
         dprintf(2, "Error: No argument specified -> *.map file needed\n");
-    else if (argc > 2)
-        dprintf(2, "Error: Too many arguments specified\n");
     else if (fd < 0)
         perror("Error");
     else if (len < 4 || strcmp(&path[len - 4], ".map"))

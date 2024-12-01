@@ -15,14 +15,22 @@ void physical_key_callback(GLFWwindow *window, int key, int scancode,
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     else if (key == GLFW_KEY_F11)
         toggle_fullscreen(window);
-    else if (key == GLFW_KEY_UP || key == GLFW_KEY_W)
-        move_player(0, -1);
-    else if (key == GLFW_KEY_DOWN || key == GLFW_KEY_S)
-        move_player(0, 1);
-    else if (key == GLFW_KEY_RIGHT || key == GLFW_KEY_D)
-        move_player(1, 0);
-    else if (key == GLFW_KEY_LEFT || key == GLFW_KEY_A)
-        move_player(-1, 0);
+    else if (man.state == ONGOING)
+    {
+        if (key == GLFW_KEY_UP || key == GLFW_KEY_W)
+            move_player(0, -1);
+        else if (key == GLFW_KEY_DOWN || key == GLFW_KEY_S)
+            move_player(0, 1);
+        else if (key == GLFW_KEY_RIGHT || key == GLFW_KEY_D)
+            move_player(1, 0);
+        else if (key == GLFW_KEY_LEFT || key == GLFW_KEY_A)
+            move_player(-1, 0);
+    }
+    else if (key == GLFW_KEY_ENTER)
+    {
+        if (!reload_game())
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
     return;
 }
 

@@ -1,14 +1,17 @@
 #include "grim_fetcher.h"
 
-static int  init(int argc, char **argv, char *title);
+static int  init(char *title, char *map_path);
+static int  game_init(char *map_path);
 static void update_time_variables(void);
 static void deinit(void);
+static void game_deinit(void);
 
 t_man man;
 
 int main(int argc, char **argv)
 {
-    if (!init(argc, argv, "Grim Fetcher"))
+    (void)argc;
+    if (!init("Grim Fetcher", argv[1]))
     {
         dprintf(2, "Error: Failure during initialization\n");
         deinit();
@@ -30,19 +33,30 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-static int init(int argc, char **argv, char *title)
+int reload_game(void)
+{
+    char *map_path;
+    int  success;
+
+    map_path = strdup(man.map.name);
+    game_deinit();
+    success = game_init(map_path);
+    free(map_path);
+    return success;
+}
+
+static int init(char *title, char *map_path)
 {
     bzero(&man, sizeof(t_man));
-    if (!set_sprite_array("textures/index.json")
-        || !set_map_and_player(argc, argv[1]))
+    if (!game_init(map_path))
+        return 0;
+    if (!set_sprite_array("textures/index.json"))
         return 0;
     man.window = get_window(title);
     man.shader_program = create_shader_program();
     if (!man.window || !man.shader_program || !create_uniform()
         || !create_mesh() || !create_frames())
         return 0;
-    set_ivec2(&man.cursor, -1, -1);
-    man.zoom = 5;
     add_outline_to_font(&man.sprites[2]);
     use_frame(man.frame[man.curr_frame]);
     glfwSetKeyCallback(man.window, physical_key_callback);
@@ -50,6 +64,20 @@ static int init(int argc, char **argv, char *title)
     glfwSetMouseButtonCallback(man.window, mouse_callback);
     glfwSetInputMode(man.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     glfwSetCursorPosCallback(man.window, cursor_pos_callback);
+    return 1;
+}
+
+static int game_init(char *map_path)
+{
+    bzero(&man.player, sizeof(t_player));
+    bzero(&man.map, sizeof(t_map));
+    man.clicked_path = 0;
+    set_ivec2(&man.cursor, -1, -1);
+    set_ivec2(&man.click_pos, -1, -1);
+    man.zoom = 5;
+    man.state = ONGOING;
+    if (!set_map_and_player(map_path))
+        return 0;
     return 1;
 }
 
@@ -73,6 +101,12 @@ static void deinit(void)
     free_mesh();
     free_frames();
     free_sprites();
+    game_deinit();
+    return;
+}
+
+static void game_deinit(void)
+{
     free(man.map.name);
     free(man.map.cells);
     list_clear(&man.clicked_path, 0);

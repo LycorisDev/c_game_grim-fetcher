@@ -19,6 +19,13 @@
 typedef unsigned char t_ubyte;
 typedef unsigned int t_uint;
 
+enum state
+{
+    ONGOING,
+    VICTORY,
+    FAILURE,
+};
+
 typedef struct s_uivec2
 {
     t_uint x;
@@ -167,9 +174,9 @@ typedef struct s_man
     int        click;
     t_ivec2    click_pos;
     int        zoom;
+    enum state state;
     t_spr      sprites[SPRITE_LEN];
     t_map      map;
-    int        game_over;
     t_list     *clicked_path;
 } t_man;
 
@@ -177,13 +184,14 @@ extern t_man man;
 
 /* Init --------------------------------------------------------------------- */
 
+int        reload_game(void);
 int        set_sprite_array(char *path);
-int        set_map_and_player(int argc, char *path);
+int        set_map_and_player(char *path);
 void       add_outline_to_font(t_spr *font);
 char       *read_file(char* filepath);
-int        get_map_fd(int argc, char *path);
+int        get_map_fd(char *path);
 char       **copy_map(int *fd, char *path);
-char       **get_map_data(int argc, char *path);
+char       **get_map_data(char *path);
 void       free_map_data(char **map);
 t_spr      *get_spr_by_symbol(char symbol);
 int        are_collectibles_and_exit_accessible(void);
@@ -224,8 +232,9 @@ int        cmp_color(t_color a, t_color b);
 void       use_frame(t_frame* f);
 void       clear_drawing(t_frame *f, GLubyte alpha);
 void       save_drawing(t_frame* f);
-int        render(void);
+void       render(void);
 long       get_delta_time(void);
+int        game_over_screen(void);
 t_spr      *get_sprite(char *id);
 t_spr      *get_spr_by_symbol(char symbol);
 void       render_background(t_frame *frame);
