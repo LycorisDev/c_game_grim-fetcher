@@ -1,10 +1,9 @@
-CC = cc
-CFLAGS = -Wall -Wextra
+CC = gcc
+CFLAGS = -Iinclude -Wall -Wextra
 LDFLAGS = -lm -lGL -lglfw
 BIN = grim_fetcher
 
-HDR_DIR = hdr
-HDR = $(HDR_DIR)/grim_fetcher.h
+HDR = include/grim_fetcher.h
 SRC = $(wildcard lib/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
 OBJ = $(SRC:.c=.o)
 
@@ -14,7 +13,7 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o: %.c $(HDR)
-	$(CC) $(CFLAGS) -I$(HDR_DIR) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 .PHONY: clean fclean re
 
