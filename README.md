@@ -9,6 +9,7 @@ The main character is Sua, a little dog people tend to confuse with a cat. Piece
 **Features**  
 - X window button, Alt+F4 or ESC to close the game.
 - F11 to toggle fullscreen mode.
+- Scroll to zoom in and out.
 - WASD, arrow keys or mouse left click to move.
 - The clicked path is calculated with the A\* pathfinding algorithm.
 - No attack button, dodge because you die on contact.
