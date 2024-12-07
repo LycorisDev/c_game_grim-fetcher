@@ -10,26 +10,40 @@ t_man man;
 
 int main(void)
 {
-    if (!init())
-    {
-        dprintf(2, "Error: Failure during initialization\n");
-        deinit();
+    bzero(&man, sizeof(t_man));
+    if (!glfwInit())
         return EXIT_FAILURE;
-    }
-    while (!glfwWindowShouldClose(man.window))
-    {
-        update_time_variables();
-        glClear(GL_COLOR_BUFFER_BIT);
-        clear_drawing(man.frame[man.curr_frame], 255);
-        render();
-        save_drawing(man.frame[man.curr_frame]);
-        render_mesh();
-        man.curr_frame = (man.curr_frame + 1) % 2;
-        glfwSwapBuffers(man.window);
-        glfwPollEvents();
-    }
-    deinit();
+    glfwTerminate();
     return EXIT_SUCCESS;
+
+    //  `get_window()`
+    //  still reachable: 238,969 bytes in 2,209 blocks
+    //  suppressed: 92,706 bytes in 906 blocks
+
+    //  only `glfwInit()`
+    //  still reachable: 25,209 bytes in 101 blocks
+    //  suppressed: 25,740 bytes in 715 blocks
+
+	// `init_gl_functions()` doesn't leak at all apparently
+
+    /*
+    man.window = get_window("Grim Fetcher");
+    man.shader_program = create_shader_program();
+    create_uniform();
+    create_mesh();
+    create_frames();
+    use_frame(man.frame[man.curr_frame]);
+    glfwSetKeyCallback(man.window, physical_key_callback);
+    glfwSetScrollCallback(man.window, scroll_callback);
+    glfwSetMouseButtonCallback(man.window, mouse_callback);
+    glfwSetInputMode(man.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    glfwSetCursorPosCallback(man.window, cursor_pos_callback);
+
+    free_shader_program();
+    free_uniform();
+    free_mesh();
+    free_frames();
+    */
 }
 
 int reload_game(void)

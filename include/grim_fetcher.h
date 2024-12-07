@@ -12,6 +12,7 @@
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include "gl_functions.h"
+#include "../lib/lodepng.h"
 
 #define RES_WIDTH  640
 #define RES_HEIGHT 360
