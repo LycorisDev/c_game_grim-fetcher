@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Iinclude -Wall -Wextra
-LDFLAGS = -lm -lGL -lglfw
+LDFLAGS = -lGL -Llib -lglfw34 -lm
 BIN = grim_fetcher
 
 HDR = include/grim_fetcher.h

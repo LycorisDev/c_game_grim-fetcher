@@ -1,5 +1,4 @@
 #include "grim_fetcher.h"
-#include "../lib/lodepng.h"
 
 t_png *load_image_from_file(char *png_path)
 {
