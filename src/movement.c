@@ -1,6 +1,6 @@
 #include "grim_fetcher.h"
 
-static t_ivec2 get_move(t_cell *cell, int rng);
+static t_ivec2 get_move(t_cell *cell, int *rng);
 static void    move_slime(t_cell *cell, t_ivec2 move);
 
 void move_symbol(t_map *map, t_ivec2 start, t_ivec2 end)
@@ -22,6 +22,7 @@ void move_symbol(t_map *map, t_ivec2 start, t_ivec2 end)
 void move_slimes(long dt)
 {
     static long ms;
+    static int  rng = 42;
     size_t      i;
     size_t      j;
     t_ivec2     move;
@@ -46,17 +47,17 @@ void move_slimes(long dt)
                 }
                 ++j;
             }
-            if (man.player.steps && ms >= 1000 && j == 4)
-                move_slime(slime, get_move(slime, (int)dt));
+            if (man.player.steps && ms >= 2000 && j == 4)
+                move_slime(slime, get_move(slime, &rng));
         }
         ++i;
     }
-    if (ms >= 1000)
-        ms -= 1000;
+    if (ms >= 2000)
+        ms -= 2000;
     return;
 }
 
-static t_ivec2 get_move(t_cell *cell, int rng)
+static t_ivec2 get_move(t_cell *cell, int *rng)
 {
     t_ivec2 allowed[4];
     size_t  i;
@@ -71,7 +72,6 @@ static t_ivec2 get_move(t_cell *cell, int rng)
         {
             allowed[i].x = cell->neighbors[j]->pos.x - cell->pos.x;
             allowed[i].y = cell->neighbors[j]->pos.y - cell->pos.y;
-            dprintf(2, "allowed[%ld].x = %d / allowed[%ld].y = %d\n", i, allowed[i].x, i, allowed[i].y);
             ++i; 
         }
         ++j;
@@ -80,8 +80,8 @@ static t_ivec2 get_move(t_cell *cell, int rng)
         set_ivec2(&move, 0, 0);
     else
     {
-        rng = rng_minmax(&rng, 0, i - 1);
-        set_ivec2(&move, allowed[rng].x, allowed[rng].y);
+        *rng = rng_minmax(rng, 1, 100);
+        set_ivec2(&move, allowed[*rng % i].x, allowed[*rng % i].y);
     }
     return move;
 }

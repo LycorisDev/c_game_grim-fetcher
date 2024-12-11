@@ -25,7 +25,10 @@ int is_cell_a_slime_neighbor(t_ivec2 i)
 
     set_ivec2(&size, man.map.size.x, man.map.size.y);
     cells = man.map.cells;
-    if (i.y > 0 && (cells[(i.y - 1) * size.x + i.x].symbol == 'B'
+    if (cells[i.y * size.x + i.x].symbol == 'E'
+        || cells[i.y * size.x + i.x].symbol == 'e')
+        return 0;
+    else if (i.y > 0 && (cells[(i.y - 1) * size.x + i.x].symbol == 'B'
         || cells[(i.y - 1) * size.x + i.x].symbol == 'G'))
         return 1;
     else if (i.y < size.y && (cells[(i.y + 1) * size.x + i.x].symbol == 'B'
