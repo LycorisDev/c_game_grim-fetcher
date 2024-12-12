@@ -70,10 +70,13 @@ void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
         * man.res.window_size_default.x / man.res.viewport_size.x;
     man.cursor.y = ((int)ypos - man.res.viewport_offset.y)
         * man.res.window_size_default.y / man.res.viewport_size.y;
-    if (man.cursor.x < 0 || man.cursor.y < 0)
+    if (man.cursor.x < 0 || man.cursor.x >= man.res.window_size_default.x
+		|| man.cursor.y < 0 || man.cursor.y >= man.res.window_size_default.y)
     {
         set_ivec2(&man.cursor, -1, -1);
+		glfwSetInputMode(man.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         return ;
     }
+    glfwSetInputMode(man.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     return;
 }

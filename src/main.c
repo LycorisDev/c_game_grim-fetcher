@@ -65,7 +65,6 @@ static int init(void)
     glfwSetKeyCallback(man.window, physical_key_callback);
     glfwSetScrollCallback(man.window, scroll_callback);
     glfwSetMouseButtonCallback(man.window, mouse_callback);
-    glfwSetInputMode(man.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     glfwSetCursorPosCallback(man.window, cursor_pos_callback);
     return 1;
 }
