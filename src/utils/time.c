@@ -1,8 +1,6 @@
 #include "grim_fetcher.h"
 #include <sys/time.h>
 
-static long get_time(void);
-
 long get_delta_time(void)
 {
     static long time;
@@ -17,7 +15,7 @@ long get_delta_time(void)
     return dt;
 }
 
-static long get_time(void)
+long get_time(void)
 {
     struct timeval tv;
 

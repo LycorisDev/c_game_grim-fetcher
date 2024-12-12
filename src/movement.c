@@ -29,6 +29,7 @@ void move_slimes(long dt)
     t_cell      *slime;
 
     ms += dt;
+    rng += (int)get_time();
     i = 0;
     slime = 0;
     while (man.map.cells[i].symbol)
@@ -47,21 +48,21 @@ void move_slimes(long dt)
                 }
                 ++j;
             }
-            if (man.player.steps && ms >= 2000 && j == 4)
+            if (man.player.steps && ms >= 1000 && j == 4)
                 move_slime(slime, get_move(slime, &rng));
         }
         ++i;
     }
-    if (ms >= 2000)
-        ms -= 2000;
+    if (ms >= 1000)
+        ms -= 1000;
     return;
 }
 
 static t_ivec2 get_move(t_cell *cell, int *rng)
 {
-    t_ivec2 allowed[4];
     size_t  i;
     size_t  j;
+    t_ivec2 allowed[4];
     t_ivec2 move;
 
     i = 0;
@@ -80,8 +81,8 @@ static t_ivec2 get_move(t_cell *cell, int *rng)
         set_ivec2(&move, 0, 0);
     else
     {
-        *rng = rng_minmax(rng, 1, 100);
-        set_ivec2(&move, allowed[*rng % i].x, allowed[*rng % i].y);
+        j = rng_minmax(rng, 1, 100);
+        set_ivec2(&move, allowed[j % i].x, allowed[j % i].y);
     }
     return move;
 }

@@ -241,6 +241,7 @@ void       clear_drawing(t_frame *f, GLubyte alpha);
 void       save_drawing(t_frame* f);
 void       render(void);
 long       get_delta_time(void);
+long       get_time(void);
 int        game_over_screen(void);
 t_spr      *get_sprite(char *id);
 t_spr      *get_spr_by_symbol(char symbol);
