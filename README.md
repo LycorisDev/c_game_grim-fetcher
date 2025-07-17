@@ -2,9 +2,13 @@
 
 *Grim Fetcher* is a 2D game written in C.  
 
-It originates from a school project which uses the MinilibX, a barebone C graphics library created for educational purposes. I'm publishing *Grim Fetcher* to GitHub because it goes much further than what the subject required. I've also seized the opportunity to port the project from MinilibX and its XPM format for images to OpenGL and PNG.  
+It originates from a school project which uses the MinilibX, a barebone C 
+graphics library created for educational purposes. I'm publishing *Grim 
+Fetcher* to GitHub because it goes much further than what the subject required. 
+I've also seized the opportunity to port the project from MinilibX and its XPM 
+format for images to OpenGL and PNG.  
 
-The main character is Sua, a little dog people tend to confuse with a cat. Piece of trivia: "sua" means cat in Sumerian. Is he that old? In any case, he's a very good boy. Indeed, a dungeon keeps the souls of fallen adventurers, preventing them from joining the afterlife, and the dungeon too dangerous for clerics to come resurrect them. Sua dives into the dungeon to fetch as many souls he can before reaching the surface to release them.  
+![](./screenshot.png)
 
 **Features**  
 - X window button, Alt+F4 or ESC to close the game.
@@ -15,4 +19,13 @@ The main character is Sua, a little dog people tend to confuse with a cat. Piece
 - No attack button, dodge because you die on contact.
 - Enemies wait for the player's first step to move.
 
-![](./screenshot.png)
+**Lore**  
+The main character is a little dog whom people around me kept calling a cat, so 
+now it's his name: Sua. It indeed means "cat" in Sumerian. Why Sumerian though, 
+is he that old? Only gods know. What I know though is that I'm quite fond of 
+the word, as this was the first one I've learned in this language (not that I 
+know Sumerian, don't @ me). In any case, Sua is a very good boy, with an 
+important job. A dungeon keeps the souls of fallen adventurers, preventing them 
+from joining the afterlife, and the dungeon is too dangerous for clerics to 
+come resurrect them. This is when Sua dives in: he comes down into the dungeon 
+to fetch as many souls he can before going back to the surface to release them.  
