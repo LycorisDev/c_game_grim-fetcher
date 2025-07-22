@@ -1,0 +1,20 @@
+See "license_monogram.txt"
+- monogram.png
+
+See "license_mg.txt"
+- mg_cursor.png
+
+See "license_md.txt"
+- md_tileset.png
+
+See "license_mc.txt"
+- mc_dog.png
+- mc_dog_shadow.png
+- mc_slime_blue.png
+- mc_slime_blue_shadow.png
+- mc_slime_green.png
+- mc_slime_green_shadow.png
+- mc_soul.png
+- mc_soul_shadow.png
+- mc_zombie.png
+- mc_zombie_shadow.png
