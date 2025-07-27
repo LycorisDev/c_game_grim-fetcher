@@ -1,58 +1,31 @@
 #include "grim_fetcher.h"
 
-double f_abs(double number)
-{
-	return number < 0 ? -number : number;
-}
-
 double f_clamp(double number, double min, double max)
 {
 	return number < min ? min : number > max ? max : number;
 }
 
-double f_floor(double number)
+int i_clamp(int number, int min, int max)
 {
-	return (int)number;
+	return number < min ? min : number > max ? max : number;
 }
 
-double f_ceil(double number)
+int i_min(int a, int b)
 {
-	return (int)number + 1;
-}
-
-double f_round(double number)
-{
-	if (number - (int)number < 0.5)
-		return f_floor(number);
-	return f_ceil(number);
-}
-
-double f_pow(double base, double exp)
-{
-	double res;
-	int    i;
-
-	res = 1.0;
-	i = 0;
-	while (i < exp)
-	{
-		res *= base;
-		++i;
-	}
-	return res;
+	return a < b ? a : b;
 }
 
 double f_sqrt(double number)
 {
-	float x;
-	float xhalf;
-	int   i;
+	double	x;
+	double	xhalf;
+	int64_t	i;
 
 	x = number;
 	xhalf = 0.5 * x;
-	i = *(int *)&x;
-	i = 0x5f375a86 - (i >> 1);
-	x = *(float *)&i;
+	memcpy(&i, &x, sizeof(int64_t));
+	i = 0x5fe6ec85e7de30da - (i >> 1);
+	memcpy(&x, &i, sizeof(double));
 	x = x * (1.5 - xhalf * x * x);
 	x = x * (1.5 - xhalf * x * x);
 	x = x * (1.5 - xhalf * x * x);
@@ -62,33 +35,13 @@ double f_sqrt(double number)
 /* Euclidean distance (all directions) */
 double f_dist_euclidean(double ax, double ay, double bx, double by)
 {
-	return f_sqrt(f_pow(ax - bx, 2) + f_pow(ay - by, 2));
+	return f_sqrt(pow(ax - bx, 2) + pow(ay - by, 2));
 }
 
 /* Manhattan distance (no diagonal) */
 double f_dist_manhattan(double ax, double ay, double bx, double by)
 {
-	return f_abs(ax - bx) + f_abs(ay - by);
-}
-
-int i_abs(int number)
-{
-	return number < 0 ? -number : number;
-}
-
-int i_min(int a, int b)
-{
-	return a < b ? a : b;
-}
-
-int i_max(int a, int b)
-{
-	return a > b ? a : b;
-}
-
-int i_clamp(int number, int min, int max)
-{
-	return number < min ? min : number > max ? max : number;
+	return fabs(ax - bx) + fabs(ay - by);
 }
 
 /* Simple 32-bit Xorshift pseudo-RNG */

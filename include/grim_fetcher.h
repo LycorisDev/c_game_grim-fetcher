@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <ctype.h>
 #include <dirent.h>
+#include <math.h>
 #include <GL/gl.h>
 #include "gl_functions.h"
 #include "lib/glfw3.h"
@@ -267,19 +268,12 @@ void		move_slimes(long dt);
 
 /* Math --------------------------------------------------------------------- */
 
-double		f_abs(double number);
 double		f_clamp(double number, double min, double max);
-double		f_floor(double number);
-double		f_ceil(double number);
-double		f_round(double number);
-double		f_pow(double base, double exp);
+int			i_clamp(int number, int min, int max);
+int			i_min(int a, int b);
 double		f_sqrt(double number);
 double		f_dist_euclidean(double ax, double ay, double bx, double by);
 double		f_dist_manhattan(double ax, double ay, double bx, double by);
-int			i_abs(int number);
-int			i_min(int a, int b);
-int			i_max(int a, int b);
-int			i_clamp(int number, int min, int max);
 int			rng_minmax(int *seed, int min, int max);
 void		set_vec2(t_vec2 *vector, double x, double y);
 void		set_ivec2(t_ivec2 *vector, int x, int y);
