@@ -35,6 +35,7 @@ GLFWwindow *get_window(char *title)
 			man.res.window_size.x, man.res.window_size.y, 
 			man.res.monitor_size.x, man.res.monitor_size.y);
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1);
 	set_initial_viewport(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	if (!init_gl_functions())
