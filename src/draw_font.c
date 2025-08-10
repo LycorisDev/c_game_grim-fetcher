@@ -35,9 +35,9 @@ void draw_font_default(t_frame *frame, t_ivec2 *pos, char *str)
 		pos->x += SIZE_X;
 		if (str[i] == '\n')
 			set_ivec2(pos, PAD, pos->y + SIZE_Y * 2);
-		if ((pos->x + SIZE_X + PAD) >= RES_WIDTH)
+		if ((pos->x + SIZE_X + PAD) >= man.res.window_size_default.x)
 			set_ivec2(pos, PAD, pos->y + SIZE_Y);
-		if ((pos->y + SIZE_Y + PAD) >= RES_HEIGHT)
+		if ((pos->y + SIZE_Y + PAD) >= man.res.window_size_default.y)
 			break;
 		++i;
 	}

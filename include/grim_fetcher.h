@@ -15,8 +15,6 @@
 #include "lib/glfw3.h"
 #include "lib/lodepng.h"
 
-#define RES_WIDTH  640
-#define RES_HEIGHT 360
 #define SPRITE_LEN 64
 
 typedef unsigned char t_ubyte;

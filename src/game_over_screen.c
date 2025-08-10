@@ -25,7 +25,8 @@ static void render_victory_emote(t_frame *frame)
 {
 	t_ivec2 pos;
 
-	set_ivec2(&pos, RES_WIDTH / 2, RES_HEIGHT / 2 - 24);
+	set_ivec2(&pos, man.res.window_size_default.x / 2,
+		man.res.window_size_default.y / 2 - 24);
 	if (man.state == VICTORY)
 	{
 		pos.x -= strlen("\\(^_^)/") / 2 * 8;
@@ -43,7 +44,8 @@ static void render_victory_msg(t_frame *frame)
 {
 	t_ivec2 pos;
 
-	set_ivec2(&pos, RES_WIDTH / 2, RES_HEIGHT / 2);
+	set_ivec2(&pos, man.res.window_size_default.x / 2,
+		man.res.window_size_default.y / 2);
 	if (man.state == VICTORY)
 	{
 		pos.x -= strlen("You won!") / 2 * 8;
@@ -61,7 +63,8 @@ static void render_reload_msg(t_frame *frame)
 {
 	t_ivec2 pos;
 
-	set_ivec2(&pos, RES_WIDTH / 2, RES_HEIGHT / 2 + 24);
+	set_ivec2(&pos, man.res.window_size_default.x / 2,
+		man.res.window_size_default.y / 2 + 24);
 	if (man.state == VICTORY)
 	{
 		if (!man.map_filenames[man.map_index + 1])

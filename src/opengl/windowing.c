@@ -1,6 +1,6 @@
 #include "grim_fetcher.h"
 
-static void set_res(const GLFWvidmode *vid_mode);
+static void set_res(void);
 static void set_viewport(int framebuffer_size_x, int framebuffer_size_y);
 static void set_initial_viewport(GLFWwindow *window);
 static void framebuffer_size_callback(GLFWwindow *window, int x, int y);
@@ -14,7 +14,7 @@ GLFWwindow *get_window(char *title)
 		fprintf(stderr, "Error: The GLFW library failed to initialize\n");
 		exit(EXIT_FAILURE);
 	}
-	set_res(glfwGetVideoMode(glfwGetPrimaryMonitor()));
+	set_res();
 	#ifdef __APPLE__
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -47,10 +47,11 @@ GLFWwindow *get_window(char *title)
 	return window;
 }
 
+__attribute__((optimize("O0")))
 void toggle_fullscreen(GLFWwindow *window)
 {
-	GLFWmonitor*       monitor;
-	const GLFWvidmode* mode;
+	GLFWmonitor*		monitor;
+	const GLFWvidmode*	mode;
 
 	if (!man.res.is_fullscreen)
 	{
@@ -77,10 +78,16 @@ void toggle_fullscreen(GLFWwindow *window)
 	return;
 }
 
-static void set_res(const GLFWvidmode *vid_mode)
+__attribute__((optimize("O0")))
+static void set_res(void)
 {
-	man.res.monitor_size.x = vid_mode->width;
-	man.res.monitor_size.y = vid_mode->height;
+	GLFWmonitor*		monitor;
+	const GLFWvidmode*	mode;
+
+	monitor = glfwGetPrimaryMonitor();
+	mode = glfwGetVideoMode(monitor);
+	man.res.monitor_size.x = mode->width;
+	man.res.monitor_size.y = mode->height;
 	man.res.aspect_ratio = (double)man.res.monitor_size.x / 
 		man.res.monitor_size.y;
 	if (man.res.aspect_ratio > 16.0 / 9)
@@ -93,8 +100,8 @@ static void set_res(const GLFWvidmode *vid_mode)
 			man.res.monitor_size.y);
 	man.res.window_size.x = man.res.window_size_default.x;
 	man.res.window_size.y = man.res.window_size_default.y;
-	man.res.fullscreen.x = (vid_mode->width - man.res.monitor_size.x) / 2;
-	man.res.fullscreen.y = (vid_mode->height - man.res.monitor_size.y) / 2;
+	man.res.fullscreen.x = (mode->width - man.res.monitor_size.x) / 2;
+	man.res.fullscreen.y = (mode->height - man.res.monitor_size.y) / 2;
 	return;
 }
 

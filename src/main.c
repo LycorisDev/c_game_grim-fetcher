@@ -48,6 +48,11 @@ static int init(void)
 {
 	memset(&man, 0, sizeof(t_man));
 	man.zoom = 5;
+	man.window = get_window("Grim Fetcher");
+	man.shader_program = create_shader_program();
+	if (!man.window || !man.shader_program || !create_uniform()
+			|| !create_mesh() || !create_frames())
+		return 0;
 	set_map_filenames();
 	if (!man.map_filenames)
 		return 0;
@@ -55,12 +60,6 @@ static int init(void)
 		return 0;
 	if (!set_sprite_array("assets/img/index.json"))
 		return 0;
-	man.window = get_window("Grim Fetcher");
-	man.shader_program = create_shader_program();
-	if (!man.window || !man.shader_program || !create_uniform()
-			|| !create_mesh() || !create_frames())
-		return 0;
-	add_outline_to_font(&man.sprites[2]);
 	use_frame(man.frame[man.curr_frame]);
 	glfwSetKeyCallback(man.window, physical_key_callback);
 	glfwSetScrollCallback(man.window, scroll_callback);

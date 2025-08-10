@@ -13,8 +13,8 @@ int create_background(void)
 	s->id = strdup("background");
 	if (!s->id)
 		return 0;
-	s->size.x = RES_WIDTH;
-	s->size.y = RES_HEIGHT;
+	s->size.x = man.res.window_size_default.x;
+	s->size.y = man.res.window_size_default.y;
 	s->cycle_len = 1;
 	s->cycle = malloc(s->cycle_len * sizeof(int *));
 	if (!s->cycle)

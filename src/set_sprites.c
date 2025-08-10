@@ -32,6 +32,7 @@ int set_sprite_array(char *path)
 	close(fd);
 	gnl(-1);
 	add_red_version_of_ground();
+	add_outline_to_font(&man.sprites[2]);
 	return is_success;
 }
 
